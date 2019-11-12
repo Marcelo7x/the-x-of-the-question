@@ -4,23 +4,26 @@ using namespace std;
 
 //Construtor padrão. Representa numero 0
 Polinomio::Polinomio() {
-    x = new double[1];
-    x = 0;
+    n = 1;
+    x = new double[n];
+    x[0] = 0;
 }
 
 //Cria um polinomio a partir de um numero inteiro (positivo ou negativo)
-Polinomio::Polinomio(const int n) {
-    x = new double[1];
-    *x = n;
+Polinomio::Polinomio(const int num) {
+    this->n = 1;
+    x = new double[n];
+    x[0] = num;
 }
 
 //Cria um polinomio a partir de um vetor de coeficientes. Os coeficientes deverão ser o do polinomio (Posicao 0 sera a_0, posicao 1 sera a_1, ...). O primeiro parametro representa o grau do polinomio.
-Polinomio::Polinomio(unsigned int n, double *a) {
-    x = new double[1];
-    for (int i = 0; i < n; i++)
+Polinomio::Polinomio(unsigned int num, double *a) {
+    x = new double[num];
+    for (int i = 0; i < num; i++)
     {
-        x[i] = i;
+        x[i] = a[i];
     }
+    this->n = num;
 }
 
 //Construtor de cópia
@@ -145,7 +148,7 @@ ostream& operator<<(ostream &, const Polinomio &) {
 
 }
 //Retorna derivada
-Polinomio::Polinomio derivada() const {
+Polinomio Polinomio::derivada() const {
 
 }
 
@@ -155,7 +158,16 @@ double Polinomio::avalia(double) const {
 }
 
 //Resolve P(x)=0. Encontra raízes reais do polinomio
-double Polinomio::resolve(int &) const {
+double* Polinomio::resolve(int &) const {
 
+}
+
+void Polinomio::imprime(){
+    for (int i = 0; i < n; i++)
+    { 
+        cout << x[i] << " ";
+    }
+    cout << endl;
+    
 }
 

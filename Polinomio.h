@@ -8,7 +8,7 @@ using namespace std;
 class Polinomio {
 	private:
 		// Você deve editar aqui para a sua representação de dados
-		unsigned int n;
+		int n;
 		double *x;
 
 	public:
@@ -110,13 +110,15 @@ class Polinomio {
 		// use o algoritmo de divisão para simplificar o polinômio...
 		double * resolve(int &) const;
 
-};
+		void imprime();
 
+};
+/*
 class PosicaoInvalidaExcept() {
 };
 class ArgumentoInvalidoExcept() {
 };
 class RaizesNaoEncontradas() {
 };
-
+*/
 #endif
