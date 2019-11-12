@@ -8,10 +8,8 @@ using namespace std;
 class Polinomio {
 	private:
 		// Você deve editar aqui para a sua representação de dados
-		int coefic;
-
 		unsigned int n;
-		double *a;
+		double *x;
 
 	public:
 		/* construtores e destrutores */
