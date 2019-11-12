@@ -24,7 +24,7 @@ Polinomio::Polinomio(unsigned int n, double *a) {
 }
 
 //Construtor de cópia
-Polinomio::Polinomio(const Polinomio &poli) {
+Polinomio::Polinomio(const Polinomio &poli) { 
     delete[] x;
     x = new double[poli.n];
     
