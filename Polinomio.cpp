@@ -28,7 +28,6 @@ Polinomio::Polinomio(unsigned int num, double *a) {
 
 //Construtor de cópia
 Polinomio::Polinomio(const Polinomio &poli) { 
-    delete[] x;
     x = new double[poli.n];
     
     for (int i = 0; i < poli.n; i++)
@@ -46,8 +45,19 @@ Polinomio::~Polinomio() {
 
 //OPERADORES
 //atribuição
-Polinomio & Polinomio::operator=(const Polinomio &) {
-
+Polinomio & Polinomio::operator=(const Polinomio &obj) {
+    if(this == &obj)
+        return *this;
+    
+    n = obj.n;
+    delete[] x;
+    x = new double[n];
+    for (int i = 0; i < n; i++)
+    {
+        x[i] = obj.x[i];
+    }
+    
+    return *this;
 }
 
 //soma
