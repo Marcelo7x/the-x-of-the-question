@@ -32,6 +32,8 @@ int main(){
     num = 5; Polinomio obj6(num, vertorDeNumeros3);
     obj5 = obj5 + obj6;
     obj5.imprime();
+    obj5 = obj5 - obj6;
+    obj5.imprime();
     delete[] vertorDeNumeros2; delete[] vertorDeNumeros3;
 
     cout <<endl; //daki para cima ta certo

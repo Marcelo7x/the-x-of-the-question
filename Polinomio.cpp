@@ -68,13 +68,11 @@ Polinomio Polinomio::operator+(const Polinomio &obj) const {
     {
         menor = this;
         maior = &obj;
-        //Polinomio objSoma(objSoma);
     }
     else
     {
         maior = this;
         menor = &obj;
-        //Polinomio objSoma(*this);
     }
     Polinomio objSoma(*maior);
 
@@ -100,13 +98,33 @@ Polinomio & Polinomio::operator+=(const double &) {
 }
 
 //Subtraçao
-Polinomio Polinomio::operator-(const Polinomio &) const {
+Polinomio Polinomio::operator-(const Polinomio &obj) const {
+    Polinomio const *menor;
+    Polinomio const *maior;
+    if (n <= obj.n)
+    {
+        menor = this;
+        maior = &obj;
+    }
+    else
+    {
+        maior = this;
+        menor = &obj;
+    }
+    Polinomio objSubtracao(*maior);
 
+    for (int i = 0; i < menor->n; i++)
+    {
+        objSubtracao.x[i] = x[i] - obj.x[i];
+    }
+    
+    return objSubtracao;
 }
 //subtrai um polinomio a um numero
 Polinomio Polinomio::operator-(const double &) const {
-
+    
 }
+
 Polinomio & Polinomio::operator-=(const Polinomio &) {
 
 }

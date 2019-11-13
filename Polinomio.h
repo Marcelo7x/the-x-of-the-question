@@ -8,7 +8,7 @@ using namespace std;
 class Polinomio {
 	private:
 		// Você deve editar aqui para a sua representação de dados
-		int n;
+		unsigned int n;
 		double *x;
 
 	public:
