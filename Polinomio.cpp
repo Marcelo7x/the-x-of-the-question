@@ -61,9 +61,31 @@ Polinomio & Polinomio::operator=(const Polinomio &obj) {
 }
 
 //soma
-Polinomio Polinomio::operator+(const Polinomio &) const {
+Polinomio Polinomio::operator+(const Polinomio &obj) const {
+    Polinomio const *menor;
+    Polinomio const *maior;
+    if (n <= obj.n)
+    {
+        menor = this;
+        maior = &obj;
+        //Polinomio objSoma(objSoma);
+    }
+    else
+    {
+        maior = this;
+        menor = &obj;
+        //Polinomio objSoma(*this);
+    }
+    Polinomio objSoma(*maior);
 
+    for (int i = 0; i < menor->n; i++)
+    {
+        objSoma.x[i] = x[i] + obj.x[i];
+    }
+    
+    return objSoma;
 }
+
 //adiciona um polinomio a um numero
 Polinomio Polinomio::operator+(const double &) const {
 
