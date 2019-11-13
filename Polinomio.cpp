@@ -193,14 +193,35 @@ Polinomio Polinomio::operator*(const Polinomio &obj) const {
     
     return objMultiplicacao;
 }
-Polinomio Polinomio::operator*(const double &) const {
+Polinomio Polinomio::operator*(const double &num) const {
+    Polinomio objMultiplicacao(*this);
 
+    for (int i = 0; i < n; i++)
+    {
+        objMultiplicacao.x[i] *= num;
+    }
+
+    return objMultiplicacao;
 }
-Polinomio & Polinomio::operator*=(const Polinomio &) {
+Polinomio & Polinomio::operator*=(const Polinomio &obj) {
+    double *vetorAux = (double*) calloc((obj.n + this->n),sizeof(double));
+    Polinomio objaux((obj.n + this->n), vetorAux);
+    free(vetorAux);
 
+    for (int i = 0; i < n; i++)
+    {
+       for (int j = 0; j < obj.n ; j++)
+       {
+           objaux.x[i+j] += x[i] * (obj.x[j]);
+       }
+    }
+    (*this) = objaux;
 }
-Polinomio & Polinomio::operator*=(const double &) {
-
+Polinomio & Polinomio::operator*=(const double &num) {
+    for (int i = 0; i < n; i++)
+    {
+        x[i] *= num;
+    }
 }
 
 //Divisao por polinomio de grau 1 da forma (x-a)

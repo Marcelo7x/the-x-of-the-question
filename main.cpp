@@ -52,12 +52,17 @@ int main(){
     double *vertorDeNumeros5 = new double[3]{3,4,4};
     num = 2; Polinomio obj7(num, vertorDeNumeros4);
     num = 3; Polinomio obj8(num, vertorDeNumeros5);
-    obj7 = obj7 * obj8;
-    obj7.imprime();
+    Polinomio obj9 = obj7 * obj8;
+    obj9.imprime();
     delete[] vertorDeNumeros4;
     delete[] vertorDeNumeros5;
 
+    obj9 = obj7 * 3;
+    obj9.imprime();
+    obj7 *= obj8;
+    obj7.imprime();
+    
     cout << endl;
-
+    
     return 0;
 }
