@@ -1,24 +1,26 @@
 #include "Polinomio.h"
 #include <iostream>
+#include <stdlib.h>
 using namespace std;
 
 //Construtor padrão. Representa numero 0
 Polinomio::Polinomio() {
     n = 1;
-    x = new double[n];
+    x = (double*) malloc(sizeof(double)*n);
     x[0] = 0;
 }
 
 //Cria um polinomio a partir de um numero inteiro (positivo ou negativo)
 Polinomio::Polinomio(const int num) {
-    this->n = 1;
-    x = new double[n];
-    x[0] = num;
+    this->n = 2;
+    x = (double*) malloc(sizeof(double)*n);
+    x[0] = 0;
+    x[1] = num;
 }
 
 //Cria um polinomio a partir de um vetor de coeficientes. Os coeficientes deverão ser o do polinomio (Posicao 0 sera a_0, posicao 1 sera a_1, ...). O primeiro parametro representa o grau do polinomio.
 Polinomio::Polinomio(unsigned int num, double *a) {
-    x = new double[num];
+    x = (double*) malloc(sizeof(double)*num);
     for (int i = 0; i < num; i++)
     {
         x[i] = a[i];
@@ -28,7 +30,7 @@ Polinomio::Polinomio(unsigned int num, double *a) {
 
 //Construtor de cópia
 Polinomio::Polinomio(const Polinomio &poli) { 
-    x = new double[poli.n];
+    x = (double*) malloc(sizeof(double)*(poli.n));
     
     for (int i = 0; i < poli.n; i++)
     {
@@ -40,7 +42,7 @@ Polinomio::Polinomio(const Polinomio &poli) {
 
 //Destrutor
 Polinomio::~Polinomio() {
-    delete[] x;
+    free(x);
 }
 
 //OPERADORES
@@ -50,8 +52,8 @@ Polinomio & Polinomio::operator=(const Polinomio &obj) {
         return *this;
     
     n = obj.n;
-    delete[] x;
-    x = new double[n];
+    free(x);
+    x = (double*) malloc(sizeof(double)*n);
     for (int i = 0; i < n; i++)
     {
         x[i] = obj.x[i];
@@ -85,11 +87,33 @@ Polinomio Polinomio::operator+(const Polinomio &obj) const {
 }
 
 //adiciona um polinomio a um numero
-Polinomio Polinomio::operator+(const double &) const {
-
+Polinomio Polinomio::operator+(const double &num) const {
+    Polinomio objSomaConstante(*this);
+    objSomaConstante.x[0]+= num;
+    
+    return objSomaConstante;
 }
 
-Polinomio & Polinomio::operator+=(const Polinomio &) {
+Polinomio & Polinomio::operator+=(const Polinomio &obj) {
+    Polinomio const *menor;
+    Polinomio const *maior;
+    if (n <= obj.n)
+    {
+        menor = this;
+        maior = &obj;
+        x = (double*) realloc(x, sizeof(double)*(maior->n));
+    }
+    else
+    {
+        maior = this;
+        menor = &obj;
+    }
+
+    for (int i = 0; i < menor->n; i++)
+    {
+        x[i] += obj.x[i];
+    }
+
 
 }
 //adiciona um polinomio a um numero
@@ -121,12 +145,32 @@ Polinomio Polinomio::operator-(const Polinomio &obj) const {
     return objSubtracao;
 }
 //subtrai um polinomio a um numero
-Polinomio Polinomio::operator-(const double &) const {
+Polinomio Polinomio::operator-(const double &num) const {
+    Polinomio objSubtracaoConstante(*this);
+    objSubtracaoConstante.x[0] -= num;
     
+    return objSubtracaoConstante;
 }
 
-Polinomio & Polinomio::operator-=(const Polinomio &) {
+Polinomio & Polinomio::operator-=(const Polinomio &obj) {
+    Polinomio const *menor;
+    Polinomio const *maior;
+    if (n <= obj.n)
+    {
+        menor = this;
+        maior = &obj;
+        x = (double*) realloc(x, sizeof(double)*(maior->n));
+    }
+    else
+    {
+        maior = this;
+        menor = &obj;
+    }
 
+    for (int i = 0; i < menor->n; i++)
+    {
+        x[i] -= obj.x[i];
+    }   
 }
 //subtrai um polinomio a um numero
 Polinomio & Polinomio::operator-=(const double &) {
@@ -215,7 +259,12 @@ double* Polinomio::resolve(int &) const {
 void Polinomio::imprime(){
     for (int i = 0; i < n; i++)
     { 
-        cout << x[i] << " ";
+        if (x[i] == 0)
+        {
+            continue;
+        }
+        
+        cout << x[i] << "x^" << i << " + ";
     }
     cout << endl;
     

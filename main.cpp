@@ -36,8 +36,17 @@ int main(){
     obj5.imprime();
     delete[] vertorDeNumeros2; delete[] vertorDeNumeros3;
 
-    cout <<endl; //daki para cima ta certo
+    obj5 = obj5+2.0;
+    obj5.imprime();
+    
+    obj5+= obj6;
+    obj5.imprime();
 
+    obj5 = obj5-2.0;
+    obj5.imprime();
+    
+    obj5-= obj6;
+    obj5.imprime();
     
     return 0;
 }
