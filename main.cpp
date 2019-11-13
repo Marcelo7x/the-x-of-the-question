@@ -47,6 +47,17 @@ int main(){
     
     obj5-= obj6;
     obj5.imprime();
-    
+
+    double *vertorDeNumeros4 = new double[2]{1,2,};
+    double *vertorDeNumeros5 = new double[3]{3,4,4};
+    num = 2; Polinomio obj7(num, vertorDeNumeros4);
+    num = 3; Polinomio obj8(num, vertorDeNumeros5);
+    obj7 = obj7 * obj8;
+    obj7.imprime();
+    delete[] vertorDeNumeros4;
+    delete[] vertorDeNumeros5;
+
+    cout << endl;
+
     return 0;
 }

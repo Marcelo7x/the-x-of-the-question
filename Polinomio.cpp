@@ -117,8 +117,8 @@ Polinomio & Polinomio::operator+=(const Polinomio &obj) {
 
 }
 //adiciona um polinomio a um numero
-Polinomio & Polinomio::operator+=(const double &) {
-
+Polinomio & Polinomio::operator+=(const double &num) {
+    x[0] += num;
 }
 
 //Subtraçao
@@ -173,13 +173,25 @@ Polinomio & Polinomio::operator-=(const Polinomio &obj) {
     }   
 }
 //subtrai um polinomio a um numero
-Polinomio & Polinomio::operator-=(const double &) {
-
+Polinomio & Polinomio::operator-=(const double &num) {
+    x[0] -= num;
 }
 
 //Multiplicação
-Polinomio Polinomio::operator*(const Polinomio &) const {
+Polinomio Polinomio::operator*(const Polinomio &obj) const {
+    double *vetorAux = (double*) calloc((obj.n + this->n),sizeof(double));
+    Polinomio objMultiplicacao((obj.n + this->n), vetorAux);
+    free(vetorAux);
 
+    for (int i = 0; i < this->n; i++)
+    {
+       for (int j = 0; j < obj.n ; j++)
+       {
+           objMultiplicacao.x[i+j] += x[i] * obj.x[j];
+       }
+    }
+    
+    return objMultiplicacao;
 }
 Polinomio Polinomio::operator*(const double &) const {
 
