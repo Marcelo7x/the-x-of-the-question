@@ -61,7 +61,7 @@ int main(){
     cout << obj5<< endl;;
 
     cout << "teste multiplicacao" <<endl;
-    double *vertorDeNumeros4 = new double[2]{1,2,};
+    double *vertorDeNumeros4 = new double[2]{1,2};
     double *vertorDeNumeros5 = new double[3]{3,4,4};
     num = 2; Polinomio obj7(num, vertorDeNumeros4);
     num = 3; Polinomio obj8(num, vertorDeNumeros5);
@@ -101,6 +101,29 @@ int main(){
         cout << i << " , " << obj9++ << endl;
     }
     cout << obj9 << endl;
+
+    cout << "teste divisao" <<endl;
+    vertorDeNumeros4 = new double[2]{-2,1};
+    num = 2; Polinomio obj10(num, vertorDeNumeros4);
+    cout << obj10 << " obj10\n";
+    vertorDeNumeros5 = new double[6]{1,0,3,0,-2,3};
+    num = 6; Polinomio obj11(num, vertorDeNumeros5);
+    cout << obj11 << " obj11\n";
+    obj11 = obj11 / obj10;
+    cout << obj11 << " obj11/obj10\n";
+    delete[]vertorDeNumeros4; delete[] vertorDeNumeros5;
+
+    cout << "teste divisao" <<endl;
+    vertorDeNumeros4 = new double[2]{-2,1};
+    num = 2; Polinomio obj12(num, vertorDeNumeros4);
+    cout << obj10 << " obj12\n";
+    vertorDeNumeros5 = new double[4]{-1,3,-2,5};
+    num = 4; Polinomio obj13(num, vertorDeNumeros5);
+    cout << obj13 << " obj13\n";
+    obj13 = obj13 / obj12;
+    cout << obj13 << " obj13/obj12\n";
+    delete[]vertorDeNumeros4; delete[] vertorDeNumeros5;
+
 
     
     cout << endl;

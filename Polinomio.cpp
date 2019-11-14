@@ -229,8 +229,24 @@ Polinomio & Polinomio::operator*=(const double &num) {
 }
 
 //Divisao por polinomio de grau 1 da forma (x-a)
-Polinomio Polinomio::operator/(const Polinomio &) const {
-
+Polinomio Polinomio::operator/(const Polinomio &obj) const {
+    Polinomio objDivisao(*this);
+    free(objDivisao.x);
+    objDivisao.x = (double*) calloc(n-1, sizeof(double));
+    objDivisao.n = n-1;
+    for (int i = objDivisao.n-1; i >= 0; i--)
+    {
+        cout << 'a'<< i << endl;
+        if (i == objDivisao.n-1)
+        {
+            objDivisao.x[i] = x[n-1];
+        }
+        else
+        {
+            objDivisao.x[i] = (-(obj.x[0]) * objDivisao.x[i+1]) + x[i+1];
+        } 
+    }
+    return objDivisao;
 }
 
 Polinomio & Polinomio::operator/=(const Polinomio &) {
