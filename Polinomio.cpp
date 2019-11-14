@@ -269,10 +269,14 @@ double Polinomio::operator[](int) const {
 
 //incrementos (adicionar 1) ao termo constante
 Polinomio Polinomio::operator++() {
-
+    x[0] += 1;
+    return *this;
 }
 Polinomio Polinomio::operator++(int) {
-
+    Polinomio obj(*this);
+    x[0] += 1;
+    
+    return obj;
 }
 
 //Comparação
