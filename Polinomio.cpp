@@ -3,19 +3,21 @@
 #include <stdlib.h>
 using namespace std;
 
+//notacao potencia "^" ... exemplo: x^2 (x elevado a 2) 
+
 //Construtor padrão. Representa numero 0
-Polinomio::Polinomio() {
+Polinomio::Polinomio() {//Aloca 1 posicao, colooca o valor 0
     n = 1;
     x = (double*) malloc(sizeof(double)*n);
     x[0] = 0;
 }
 
 //Cria um polinomio a partir de um numero inteiro (positivo ou negativo)
-Polinomio::Polinomio(const int num) {
-    this->n = 2;
+Polinomio::Polinomio(const int num) {//Aloca um vetor de 2 posicoes, cada o numero da posicao idica o grau
+    this->n = 2;                            //do polinomio, exemplo: x[3] = 2 equivale as 2x^3
     x = (double*) malloc(sizeof(double)*n);
     x[0] = 0;
-    x[1] = num;
+    x[1] = num;     //polinomio formado por 0x^0 (primeira posicao do vetor) e ax^1;
 }
 
 //Cria um polinomio a partir de um vetor de coeficientes. Os coeficientes deverão ser o do polinomio (Posicao 0 sera a_0, posicao 1 sera a_1, ...). O primeiro parametro representa o grau do polinomio.
@@ -52,8 +54,10 @@ Polinomio & Polinomio::operator=(const Polinomio &obj) {
         return *this;
     
     n = obj.n;
+
     free(x);
     x = (double*) malloc(sizeof(double)*n);
+    
     for (int i = 0; i < n; i++)
     {
         x[i] = obj.x[i];
@@ -66,7 +70,7 @@ Polinomio & Polinomio::operator=(const Polinomio &obj) {
 Polinomio Polinomio::operator+(const Polinomio &obj) const {
     Polinomio const *menor;
     Polinomio const *maior;
-    if (n <= obj.n)
+    if (n <= obj.n)         //verifica o tamanho do maior vetor de polinomio
     {
         menor = this;
         maior = &obj;
@@ -76,7 +80,7 @@ Polinomio Polinomio::operator+(const Polinomio &obj) const {
         maior = this;
         menor = &obj;
     }
-    Polinomio objSoma(*maior);
+    Polinomio objSoma(*maior);  //objeto auxiliar 
 
     for (int i = 0; i < menor->n; i++)
     {
@@ -89,7 +93,7 @@ Polinomio Polinomio::operator+(const Polinomio &obj) const {
 //adiciona um polinomio a um numero
 Polinomio Polinomio::operator+(const double &num) const {
     Polinomio objSomaConstante(*this);
-    objSomaConstante.x[0]+= num;
+    objSomaConstante.x[0]+= num;    //soma o elemento a posicao 0, onde esta o termo independente
     
     return objSomaConstante;
 }
@@ -233,11 +237,21 @@ Polinomio & Polinomio::operator/=(const Polinomio &) {
 
 }
 //divide por um numero
-Polinomio Polinomio::operator/(const int &) const {
+Polinomio Polinomio::operator/(const int &num) const {
+    Polinomio objDivisao(*this);
 
+    for (int i = 0; i < n; i++)
+    {
+        objDivisao.x[i] /= num;
+    }
+
+    return objDivisao;
 }
-Polinomio & Polinomio::operator/=(const int &) {
-
+Polinomio & Polinomio::operator/=(const int &num) {
+    for (int i = 0; i < n; i++)
+    {
+        x[i] /= num;
+    }
 }
 
 //resto da divisao por um polinomio grau 1 da forma (x-1)
@@ -271,8 +285,36 @@ bool Polinomio::operator==(const Polinomio &) const {
 istream& operator>>(istream &, Polinomio &) {
 
 }
-ostream& operator<<(ostream &, const Polinomio &) {
+ostream& operator<<(ostream &os, const Polinomio &obj) {
+    for (int i = 0; i < obj.n; i++)
+    { 
+        if ((obj.x[0] == 0) && (i == 0))
+        {
+            cout << 0;
+            continue;
+        }
+        if (i == 0)
+        {
+            if (obj.x[i] == 0)
+            {
+                cout << 0;
+                continue;
+            }
+            
+            os << obj.x[i] << "x^" << i;
+        }
 
+        else
+        {
+            if (obj.x[i] == 0)
+            {
+                cout << " + " << 0;
+                continue;
+            }
+            os << " + " << obj.x[i] << "x^" << i;
+        }
+    }
+    return os;
 }
 //Retorna derivada
 Polinomio Polinomio::derivada() const {
