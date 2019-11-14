@@ -236,7 +236,6 @@ Polinomio Polinomio::operator/(const Polinomio &obj) const {
     objDivisao.n = n-1;
     for (int i = objDivisao.n-1; i >= 0; i--)
     {
-        cout << 'a'<< i << endl;
         if (i == objDivisao.n-1)
         {
             objDivisao.x[i] = x[n-1];
@@ -284,11 +283,11 @@ double Polinomio::operator[](int) const {
 }
 
 //incrementos (adicionar 1) ao termo constante
-Polinomio Polinomio::operator++() {
+Polinomio Polinomio::operator++() { // ++ prefixado
     x[0] += 1;
     return *this;
 }
-Polinomio Polinomio::operator++(int) {
+Polinomio Polinomio::operator++(int) { //++ pos fixado 
     Polinomio obj(*this);
     x[0] += 1;
     
@@ -349,19 +348,5 @@ double Polinomio::avalia(double) const {
 //Resolve P(x)=0. Encontra raízes reais do polinomio
 double* Polinomio::resolve(int &) const {
 
-}
-
-void Polinomio::imprime(){
-    for (int i = 0; i < n; i++)
-    { 
-        if (x[i] == 0)
-        {
-            continue;
-        }
-        
-        cout << x[i] << "x^" << i << " + ";
-    }
-    cout << endl;
-    
 }
 
