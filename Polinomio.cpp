@@ -270,8 +270,28 @@ Polinomio & Polinomio::operator/=(const int &num) {
 }
 
 //resto da divisao por um polinomio grau 1 da forma (x-1)
-Polinomio Polinomio::operator%(const Polinomio &) const {
-
+Polinomio Polinomio::operator%(const Polinomio &obj) const {
+    Polinomio objDivisao(*this);
+    free(objDivisao.x);
+    objDivisao.x = (double*) calloc(n-1, sizeof(double));
+    objDivisao.n = n-1;
+    for (int i = objDivisao.n-1; i >= 0; i--)
+    {
+        if (i == objDivisao.n-1)
+        {
+            objDivisao.x[i] = x[n-1];
+        }
+        else
+        {
+            objDivisao.x[i] = (-(obj.x[0]) * objDivisao.x[i+1]) + x[i+1];
+        } 
+    }
+    
+    objDivisao.x[0] = (-(obj.x[0]) * objDivisao.x[0]) + x[0];
+    objDivisao.x = (double*) realloc(objDivisao.x, sizeof(double));
+    objDivisao.n = 1;
+    
+    return objDivisao;
 }
 Polinomio & Polinomio::operator%=(const Polinomio &) {
 
@@ -305,32 +325,27 @@ istream& operator>>(istream &, Polinomio &) {
 
 }
 ostream& operator<<(ostream &os, const Polinomio &obj) {
-    for (int i = 0; i < obj.n; i++)
+    for (int i = obj.n-1; i >= 0; i--)
     { 
-        if ((obj.x[0] == 0) && (i == 0))
-        {
-            cout << 0;
+        if ((obj.x[i] == 0))
+        { 
             continue;
         }
         if (i == 0)
         {
-            if (obj.x[i] == 0)
-            {
-                cout << 0;
-                continue;
-            }
-            
-            os << obj.x[i] << "x^" << i;
+            os << obj.x[i];
         }
 
         else
         {
-            if (obj.x[i] == 0)
+            if (obj.x[i-1] < 0 || ((i-1 == 0) && obj.x[i-1] == 0))
             {
-                cout << " + " << 0;
-                continue;
+                os << obj.x[i] << "x^" << i << " ";
             }
-            os << " + " << obj.x[i] << "x^" << i;
+            else
+            {
+                os << obj.x[i] << "x^" << i << " + ";
+            }
         }
     }
     return os;

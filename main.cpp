@@ -116,15 +116,16 @@ int main(){
     cout << "teste divisao" <<endl;
     vertorDeNumeros4 = new double[2]{-2,1};
     num = 2; Polinomio obj12(num, vertorDeNumeros4);
-    cout << obj10 << " obj12\n";
+    cout << obj12 << " obj12\n";
     vertorDeNumeros5 = new double[4]{-1,3,-2,5};
     num = 4; Polinomio obj13(num, vertorDeNumeros5);
     cout << obj13 << " obj13\n";
-    obj13 = obj13 / obj12;
-    cout << obj13 << " obj13/obj12\n";
+    Polinomio obj14 = obj13 / obj12;
+    cout << obj14 << " obj13/obj12\n";
     delete[]vertorDeNumeros4; delete[] vertorDeNumeros5;
 
-
+    cout << "teste resto divisao" <<endl;
+    cout << obj13 % obj12 << endl;
     
     cout << endl;
     
