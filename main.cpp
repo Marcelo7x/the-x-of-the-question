@@ -132,6 +132,13 @@ int main(){
     cout << "teste resto divisao" <<endl;
     cout << obj13 % obj12 << endl;
 
+    cout << "teste %=" <<endl;
+    obj14 = obj13;
+    obj14 %= obj12;
+    cout << obj14 << endl;
+
+    cout << "teste []" <<endl;
+    cout << obj13[2] << endl;
     
     cout << endl;
     

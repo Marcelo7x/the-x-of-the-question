@@ -265,7 +265,7 @@ Polinomio & Polinomio::operator/=(const Polinomio &obj) {
         } 
     }
     *this = objDivisao;
-    
+
     return *this;
 }
 //divide por um numero
@@ -310,13 +310,34 @@ Polinomio Polinomio::operator%(const Polinomio &obj) const {
     
     return objDivisao;
 }
-Polinomio & Polinomio::operator%=(const Polinomio &) {
-
+Polinomio & Polinomio::operator%=(const Polinomio &obj) {
+    Polinomio objDivisao(*this);
+    free(objDivisao.x);
+    objDivisao.x = (double*) calloc(n-1, sizeof(double));
+    objDivisao.n = n-1;
+    for (int i = objDivisao.n-1; i >= 0; i--)
+    {
+        if (i == objDivisao.n-1)
+        {
+            objDivisao.x[i] = x[n-1];
+        }
+        else
+        {
+            objDivisao.x[i] = (-(obj.x[0]) * objDivisao.x[i+1]) + x[i+1];
+        } 
+    }
+    
+    objDivisao.x[0] = (-(obj.x[0]) * objDivisao.x[0]) + x[0];
+    objDivisao.x = (double*) realloc(objDivisao.x, sizeof(double));
+    objDivisao.n = 1;
+    *this = objDivisao;
+    
+    return *this;
 }
 
 //Retorna o i-esimo coeficiente
-double Polinomio::operator[](int) const {
-
+double Polinomio::operator[](int num) const {
+    return x[num];
 }
 
 //incrementos (adicionar 1) ao termo constante
