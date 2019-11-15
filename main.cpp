@@ -124,8 +124,14 @@ int main(){
     cout << obj14 << " obj13/obj12\n";
     delete[]vertorDeNumeros4; delete[] vertorDeNumeros5;
 
+    cout << "teste /=" <<endl;
+    obj14 = obj13;
+    obj14 /= obj12;
+    cout << obj14 << endl;
+
     cout << "teste resto divisao" <<endl;
     cout << obj13 % obj12 << endl;
+
     
     cout << endl;
     
