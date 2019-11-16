@@ -391,7 +391,16 @@ ostream& operator<<(ostream &os, const Polinomio &obj) {
 }
 //Retorna derivada
 Polinomio Polinomio::derivada() const {
+    Polinomio obj(*this);
+    obj.x = (double*) realloc(obj.x, sizeof(double)* (n-1));
+    obj.n--;
+    
+    for (int i = 0; i < n-1; i++)
+    {
+        obj.x[i] = x[i+1] * (i+1);
+    }
 
+    return obj;
 }
 
 //Avalia
