@@ -359,9 +359,10 @@ bool Polinomio::operator==(const Polinomio &) const {
 }
 
 //Entrada e Saída
-istream& operator>>(istream &, Polinomio &) {
-
+istream& operator>>(istream &is, Polinomio &obj) {
+   
 }
+
 ostream& operator<<(ostream &os, const Polinomio &obj) {
     for (int i = obj.n-1; i >= 0; i--)
     { 
@@ -394,8 +395,14 @@ Polinomio Polinomio::derivada() const {
 }
 
 //Avalia
-double Polinomio::avalia(double) const {
-
+double Polinomio::avalia(double num) const {
+    double result = (x[n-1] * num) + (x[n-2]);
+    for (int i = n-3; i >= 0; i--)
+    {
+        result = (result * num) + (x[i]);  
+    }
+    
+    return result;
 }
 
 //Resolve P(x)=0. Encontra raízes reais do polinomio

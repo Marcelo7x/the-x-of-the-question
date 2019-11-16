@@ -141,6 +141,12 @@ int main(){
     cout << obj13[2] << endl;
     
     cout << endl;
-    
+
+    vertorDeNumeros = new double[6]{1,-3,7,5,-2,3}; num = 6;
+    Polinomio obj15(num, vertorDeNumeros);
+    cout << obj15 << endl;
+    cout << obj15.avalia(4) << endl;
+
+
     return 0;
 }
