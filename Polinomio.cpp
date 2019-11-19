@@ -1,6 +1,9 @@
 #include "Polinomio.h"
 #include <iostream>
 #include <stdlib.h>
+#include <iomanip>
+#include <math.h>
+
 using namespace std;
 
 //notacao potencia "^" ... exemplo: x^2 (x elevado a 2) 
@@ -407,10 +410,17 @@ ostream& operator<<(ostream &os, const Polinomio &obj) {
             }
         }
     }
+    
     return os;
 }
 //Retorna derivada
 Polinomio Polinomio::derivada() const {
+    if (n == 1)
+    {
+        Polinomio obj;
+        return obj;
+    }
+    
     Polinomio obj(*this);
     obj.x = (double*) realloc(obj.x, sizeof(double)* (n-1));
     obj.n--;
@@ -425,6 +435,11 @@ Polinomio Polinomio::derivada() const {
 
 //Avalia
 double Polinomio::avalia(double num) const {
+    if (n == 1)
+    {
+        return x[0];
+    }
+    
     double result = (x[n-1] * num) + (x[n-2]);
     for (int i = n-3; i >= 0; i--)
     {
@@ -436,20 +451,80 @@ double Polinomio::avalia(double num) const {
 
 //Resolve P(x)=0. Encontra raízes reais do polinomio
 double* Polinomio::resolve(int &numRaizes) const {
-    double *raizes = new double[n];
-    Polinomio divide(1);
-    divide.x[0] = -1;
-    Polinomio aux(*this);
-    Polinomio aux1;
-    
-    for (int i = n-1; i > 0; i++)
+    if (n == 2)
     {
-        aux1 = aux.derivada();
-        raizes[i] = i - ((aux.avalia(0)) / aux1.avalia(0));
-        (aux)/= divide;
+        double *raiz = (double*) malloc(sizeof(double));
+        raiz[0] = (-x[0]/x[1]);
+        numRaizes = 1;
+        return raiz;
     }
-    numRaizes = n-1;
+    if (n == 3)
+    {
+        double *raiz = (double*) malloc(sizeof(double)*2);
 
-    return raizes;
+        double delta = (x[1] * x[1]) - (4 * x[2] * x[0]);
+        if (delta < 0)
+        {
+            raiz[0] = 0; // deve lancar uma execao fala que nao existe raiz
+            raiz = (double*) realloc(raiz, sizeof(double));
+            numRaizes = 1;
+            return raiz;   
+        }
+        
+        raiz[0] = (-x[1] - sqrt(delta))/(2*x[2]);
+        raiz[1] = (-x[1] + sqrt(delta))/(2*x[2]);
+        numRaizes = 2;
+
+        return raiz;
+    }
+
+    double *raiz = (double*) malloc(sizeof(double)*n);
+    Polinomio auxFuncao(*this);
+    Polinomio auxDerivada = (*this).derivada();
+    Polinomio divide(1);
+    double x = 1;
+    if (auxDerivada.avalia(x) == 0)
+    {
+        x++;
+    }
+    
+    int j = 0;
+    double EPSILON = 1e-15;
+    
+    for (int i = 0; i < 250; i++)
+    {
+        raiz[j] = x - (auxFuncao.avalia(x) / auxDerivada.avalia(x));
+ 
+        if (auxFuncao.avalia(raiz[j]) <= EPSILON)
+        {
+            raiz[j] = x;
+            divide.x[0] = -raiz[j];
+            auxFuncao /= divide;
+            auxDerivada = auxFuncao.derivada();
+            x = 1;
+            if (auxDerivada.avalia(x) == 0)
+            {
+                x++;
+            }
+
+            j++;
+
+            if (j>= n)
+            {
+                break;
+            }
+        }
+        else
+        {
+            x = raiz[j];
+        } 
+    }
+
+    raiz = (double*) realloc(raiz, sizeof(double)*j);
+    numRaizes = j;
+    
+
+   return raiz; 
+
 }
 

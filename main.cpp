@@ -145,27 +145,42 @@ int main(){
     Polinomio obj15(num, vertorDeNumeros);
     cout << obj15 << endl;
     cout << obj15.avalia(4) << endl;
+    delete[] vertorDeNumeros;
 
     cout << "teste derivada" <<endl;
     cout << obj15.derivada() << endl;
 
-    cout << "teste >>" <<endl;
+    /*cout << "teste >>" <<endl;
     Polinomio obj16(obj15);
     cin >> obj16;
-    cout << obj16 << endl;
+    cout << obj16 << endl;*/
     
     cout << "teste ==" <<endl;
-    obj16 = obj15;
-    if (obj16 == obj15)
+    obj14 = obj15;
+    if (obj14 == obj15)
     {
         cout << " deu certo\n";
     }
-    if (obj16 == obj13)
+    if (obj14 == obj13)
     {
         cout << " deu errado\n";
     }
 
     cout << endl;
+
+    cout << "teste resolve\n";
+    int numraizes;
+    vertorDeNumeros =  new double[4]{5,-9,0,1};
+    num = 4; Polinomio obj17(num, vertorDeNumeros);
+    cout << obj17 << endl;
+    double* r = obj17.resolve(numraizes);
+
+    for (int i = 0; i < numraizes; i++)
+    {
+        cout << r[i] << endl;
+    }
+    delete[] vertorDeNumeros;
+    free(r);
 
     return 0;
 }
