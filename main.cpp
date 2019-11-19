@@ -115,7 +115,7 @@ int main(){
 
     cout << "teste divisao" <<endl;
     vertorDeNumeros4 = new double[2]{-2,1};
-    num = 2; Polinomio obj12(num, vertorDeNumeros4);
+    num = 2; Polinomio obj12(2);
     cout << obj12 << " obj12\n";
     vertorDeNumeros5 = new double[4]{-1,3,-2,5};
     num = 4; Polinomio obj13(num, vertorDeNumeros5);
@@ -149,7 +149,12 @@ int main(){
     cout << "teste derivada" <<endl;
     cout << obj15.derivada() << endl;
 
+    Polinomio obj16(obj15);
+    cin >> obj16;
+    cout << obj16 << endl;
+    
     cout << endl;
+ 
 
     return 0;
 }

@@ -360,7 +360,12 @@ bool Polinomio::operator==(const Polinomio &) const {
 
 //Entrada e Saída
 istream& operator>>(istream &is, Polinomio &obj) {
+   for (int i = obj.n-1; i >= 0; i--)
+   {
+       is >> obj.x[i];
+   }
    
+   return is;
 }
 
 ostream& operator<<(ostream &os, const Polinomio &obj) {
@@ -415,7 +420,21 @@ double Polinomio::avalia(double num) const {
 }
 
 //Resolve P(x)=0. Encontra raízes reais do polinomio
-double* Polinomio::resolve(int &) const {
+double* Polinomio::resolve(int &numRaizes) const {
+    double *raizes = new double[n];
+    Polinomio divide(1);
+    divide.x[0] = -1;
+    Polinomio aux(*this);
+    Polinomio aux1;
+    
+    for (int i = n-1; i > 0; i++)
+    {
+        aux1 = aux.derivada();
+        raizes[i] = i - ((aux.avalia(0)) / aux1.avalia(0));
+        (aux)/= divide;
+    }
+    numRaizes = n-1;
 
+    return raizes;
 }
 
