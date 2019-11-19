@@ -354,8 +354,23 @@ Polinomio Polinomio::operator++(int) { //++ pos fixado
 
 //Comparação
 //igualdade (verifica se dois polinomios tem  o mesmo grau e coeficientes)
-bool Polinomio::operator==(const Polinomio &) const {
+bool Polinomio::operator==(const Polinomio &obj) const {
+    if(n != obj.n) return false;
+    const double EPSILON = 1e-10;
 
+    for (int i = 0; i < n; i++)
+    {
+        if ((x[i]-obj.x[i]) <= EPSILON)
+        {
+            continue;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    return true;
 }
 
 //Entrada e Saída

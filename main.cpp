@@ -149,12 +149,23 @@ int main(){
     cout << "teste derivada" <<endl;
     cout << obj15.derivada() << endl;
 
+    cout << "teste >>" <<endl;
     Polinomio obj16(obj15);
     cin >> obj16;
     cout << obj16 << endl;
     
+    cout << "teste ==" <<endl;
+    obj16 = obj15;
+    if (obj16 == obj15)
+    {
+        cout << " deu certo\n";
+    }
+    if (obj16 == obj13)
+    {
+        cout << " deu errado\n";
+    }
+
     cout << endl;
- 
 
     return 0;
 }
