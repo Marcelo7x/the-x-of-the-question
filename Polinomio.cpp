@@ -387,28 +387,60 @@ istream& operator>>(istream &is, Polinomio &obj) {
 }
 
 ostream& operator<<(ostream &os, const Polinomio &obj) {
+    bool sinal = false;
     for (int i = obj.n-1; i >= 0; i--)
     { 
-        if ((obj.x[i] == 0))
-        { 
-            continue;
-        }
-        if (i == 0)
+        if(sinal && obj.x[i] > 0)
         {
-            os << obj.x[i];
+            os << " + ";
         }
-
-        else
+        if (obj.x[i] < 0)
         {
-            if (obj.x[i-1] < 0 || ((i-1 == 0) && obj.x[i-1] == 0))
+            os << " - ";
+        }
+        
+        if (i == obj.n-1)
+        {
+            if (obj.x[i] < 0)
             {
-                os << obj.x[i] << "x^" << i << " ";
+                os << obj.x[i] * (-1) << "x^" << i;
+            }
+            else if (obj.x[i] == 0)
+            {
+                continue;
             }
             else
             {
-                os << obj.x[i] << "x^" << i << " + ";
+                os << obj.x[i] << "x^" << i;
             }
         }
+        else if (obj.x[i] == 0)
+        {
+            continue;
+        }
+        else if (i == 0)
+        {
+            if (obj.x[i] < 0)
+            {
+                os << obj.x[i] * (-1);
+            }
+            else
+            {
+                os << obj.x[i];
+            }
+        }
+        else
+        {
+            if (obj.x[i] < 0)
+            {
+                os << obj.x[i] * (-1) << "x^" << i;
+            }
+            else
+            {  
+                os << obj.x[i] << "x^" << i;
+            }
+        }
+        sinal = true;
     }
     
     return os;
@@ -523,8 +555,6 @@ double* Polinomio::resolve(int &numRaizes) const {
     raiz = (double*) realloc(raiz, sizeof(double)*j);
     numRaizes = j;
     
-
    return raiz; 
-
 }
 
