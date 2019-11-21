@@ -46,19 +46,19 @@ int main(){
 
     cout << "teste somar constante" <<endl;
     obj5 = obj5+2.0;
-    cout << obj5<< endl;;
+    cout << obj5<< endl;
     
     cout << "teste +=" <<endl;
     obj5+= obj6;
-    cout << obj5<< endl;;
+    cout << obj5<< endl;
 
     cout << "teste subtrair constante" <<endl;
     obj5 = obj5-2.0;
-    cout << obj5<< endl;;
+    cout << obj5<< endl;
     
     cout << "teste -=" <<endl;
     obj5-= obj6;
-    cout << obj5<< endl;;
+    cout << obj5<< endl;
 
     cout << "teste multiplicacao" <<endl;
     double *vertorDeNumeros4 = new double[2]{1,2};
@@ -75,6 +75,7 @@ int main(){
     cout << obj9<< endl;;
     
     cout << "teste *=" <<endl;
+    cout << obj7 << endl << obj8 << endl;
     obj7 *= obj8;
     cout << obj7<< endl;
 
@@ -150,10 +151,10 @@ int main(){
     cout << "teste derivada" <<endl;
     cout << obj15.derivada() << endl;
 
-    /*cout << "teste >>" <<endl;
+    cout << "teste >>" <<endl;
     Polinomio obj16(obj15);
     cin >> obj16;
-    cout << obj16 << endl;*/
+    cout << obj16 << endl;
     
     cout << "teste ==" <<endl;
     obj14 = obj15;
