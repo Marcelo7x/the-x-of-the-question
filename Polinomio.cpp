@@ -104,12 +104,16 @@ Polinomio Polinomio::operator+(const double &num) const {
 Polinomio & Polinomio::operator+=(const Polinomio &obj) {
     Polinomio const *menor;
     Polinomio const *maior;
+
     if (n <= obj.n) //verifica o tamanho do maior vetor de polinomios
     {
         menor = this;
         maior = &obj;
         x = (double*) realloc(x, sizeof(double)*(maior->n));    //iguala o tamanho do vetor a ser modificado ao outro vetor
-        n = obj.n;
+        for (int i = menor->n; i < maior->n; i++)//copia os polinomios cujo nao ha termos semelhantes
+        {
+            x[i] = obj.x[i];
+        }
     }                                                           //caso ele for menor
     else
     {
@@ -121,6 +125,8 @@ Polinomio & Polinomio::operator+=(const Polinomio &obj) {
     {
         x[i] += obj.x[i];
     }
+
+    n = maior->n;
 
     return *this;
 }
@@ -169,6 +175,10 @@ Polinomio & Polinomio::operator-=(const Polinomio &obj) {
         menor = this;
         maior = &obj;
         x = (double*) realloc(x, sizeof(double)*(maior->n));
+        for (int i = menor->n; i < maior->n; i++)//copia os polinomios cujo nao ha termos semelhantes
+        {
+            x[i] = obj.x[i];
+        }
     }
     else
     {
@@ -179,11 +189,17 @@ Polinomio & Polinomio::operator-=(const Polinomio &obj) {
     for (int i = 0; i < menor->n; i++)
     {
         x[i] -= obj.x[i];
-    }   
+    }  
+    
+    n = maior->n;
+    
+    return *this; 
 }
 //subtrai um polinomio a um numero
 Polinomio & Polinomio::operator-=(const double &num) {
     x[0] -= num;
+    
+    return *this;
 }
 
 //Multiplicação
@@ -415,9 +431,13 @@ ostream& operator<<(ostream &os, const Polinomio &obj) {
             {
                 os << obj.x[i] * (-1);//troca o sinal de numeros negativos pois os sinais sao impressos 
             }                         //independentemente
-            else
+            else if(obj.x[i] > 0)
             {
                 os << obj.x[i];
+            }
+            else
+            {
+                continue;
             }
         }
         else if (i == obj.n-1)

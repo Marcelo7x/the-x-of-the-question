@@ -1,187 +1,145 @@
 #include "Polinomio.h"
 #include <iostream>
+#include <string.h>
+#include <time.h>
 using namespace std;
 
-void funcaoParaTestarConstrutorDeCopia(Polinomio obj){
+void soma(Polinomio &base, Polinomio &copia, Polinomio &resultado, Polinomio &auxiliar){
+    cout << '(' << base << ')' << " + " << '(' << auxiliar << ')' << endl;
+    resultado = base + auxiliar;
+    cout << "= " << resultado << endl << endl;
+    copia += auxiliar;
+    cout << "+= " << copia << endl << endl;
+}
+
+void subtracao(Polinomio &base, Polinomio &copia, Polinomio &resultado, Polinomio &auxiliar){
+    cout << '(' << base << ')' << " - " << '(' << auxiliar << ')' << endl;
+    resultado = base - auxiliar;
+    cout << "= " << resultado << endl << endl;
+    copia = base;
+    copia -= auxiliar;
+    cout << "-= " << copia << endl << endl;
+}
+
+void multiplicacao(Polinomio &base, Polinomio &copia, Polinomio &resultado, Polinomio &auxiliar){
+    cout << '(' << base << ')' << " * " << '(' << auxiliar << ')' << endl;
+    resultado = base * auxiliar;
+    cout << "= " << resultado << endl << endl;
+    copia = base;
+    copia *= auxiliar;
+    cout << "*= " << copia << endl << endl;
+}
+
+void divisao(Polinomio &base, Polinomio &copia, Polinomio &resultado, Polinomio &auxiliar, Polinomio &auxiliarDivisao){
+    cout << '(' << base << ')' << " / " << '(' << auxiliarDivisao << ')' << endl;
+    resultado = base / auxiliarDivisao;
+    cout << "= " << resultado << endl << endl;
+    copia = base;
+    copia /= auxiliarDivisao;
+    cout << "/= " << copia << endl << endl;
+
+    cout << '(' << base << ')' << " % " << '(' << auxiliarDivisao << ')' << endl;
+    resultado = base % auxiliarDivisao;
+    cout << "= " << resultado << endl << endl;
+    copia = base;
+    copia %= auxiliarDivisao;
+    cout << "%= " << copia << endl << endl;
+}
+
+void derivada(Polinomio &auxiliar){
+    cout << "Derivada(" << auxiliar <<")\n";
+    cout << "= " << auxiliar.derivada() << endl << endl;
+}
+
+void avalia(Polinomio &auxiliar){
+    double x = (rand()%11);
+    cout << "Avalia(" << auxiliar << ") p/ x = " << x << endl;
+    cout << "= " << auxiliar.avalia(x) << endl << endl;
+}
+
+void resolve(Polinomio &auxiliar){
+    cout << "Resolve(" << auxiliar << ")\n";
+    int numRaizes;
+    double *raizes = auxiliar.resolve(numRaizes);
+    cout << numRaizes << " raizes\n";
+    if (numRaizes > 0)
+    {
+        cout << "Raizes{";
+        for (int i = 0; i < numRaizes; i++)
+        {
+            if (i == numRaizes-1)
+            {
+                cout << raizes[i];
+                break;
+            }
+            
+            cout << raizes[i] <<", ";
+        }
+        cout << "}\n\n";
+    }
+}
+
+void exemplo(){
+    srand(time(NULL));
+
+    double *vetor1 = new double[6]{0,1,2,3,4,5};
+    Polinomio base(6,vetor1);
+    delete[] vetor1;
+
+    int numAleatorio = rand() % 11;
+    vetor1 = new double[numAleatorio];
+    for (int i = 0; i < numAleatorio; i++)
+    {
+        vetor1[i] = rand() % 101;
+    }
+    Polinomio auxiliar(numAleatorio, vetor1);
+    delete[] vetor1;
+
+    Polinomio copia(base);
+    Polinomio resultado;
+
+    cout << "SOMA\n";
+    soma(base, copia, resultado, auxiliar);
+
+    cout << "SUBTRACAO\n";
+    subtracao(base, copia, resultado, auxiliar);
+
+    cout << "MULTIPLICACAO\n";
+    multiplicacao(base, copia, resultado, auxiliar);
+
+    cout << "DIVISAO\n";
+    vetor1 = new double[2]{(double)(-rand()%11),1};
+    Polinomio auxiliarDivisao(2,vetor1);
+    delete[] vetor1;
+    divisao(base, copia, resultado, auxiliar, auxiliarDivisao);
+
+    cout << "DERIVADA\n";
+    derivada(auxiliar);
+
+    cout << "AVALIA\n";
+    avalia(auxiliar);
+
+    cout << "RESOLVE\n";
+    resolve(auxiliar);
+
+    double n = (rand()%11);
+    cout << "exemplo de calculo: P(" << n <<"){(++(" << base <<") * 2) - (" << auxiliar << ") * 2) / (" 
+    << auxiliarDivisao << ")} + " << "P(" << n <<"){(" << "derivada(" <<auxiliar << ")} - " 
+    << "((" << auxiliar << ") % (" << auxiliarDivisao << "))\n";
+    
+    cout << "= " << ((++base*2) - ((auxiliar*2)/auxiliarDivisao)).avalia(n) 
+    + (auxiliar.derivada().avalia(n)) - (auxiliar%auxiliarDivisao).avalia(0);
+    cout << endl;
 
 }
 
-int main(){
-    cout << "teste construtor 1" <<endl;
-    Polinomio obj1;
-    cout << obj1<< endl;;
 
-    cout << "teste construtor 2" <<endl;
-    Polinomio obj2(3);
-    cout << obj2<< endl;;
-
-    cout << "teste construtor 3" <<endl;
-    unsigned int num = 4;
-    double *vertorDeNumeros = new double[4]{0,1,0,0};
-    Polinomio obj3(num, vertorDeNumeros);
-    cout << obj3 << endl;
-    delete[] vertorDeNumeros;
-
-    cout << "teste construtor de copia" <<endl;
-    Polinomio obj4(obj3);
-    cout << obj4<< endl;;
-
-    cout << "teste atribuicao" <<endl;
-    obj4 = obj2;
-    cout << obj4 << endl;;
-   
-    cout << "teste construtor de copia" <<endl;
-    funcaoParaTestarConstrutorDeCopia(obj4);
-
-    cout << "teste soma e subtracao" <<endl;
-    double *vertorDeNumeros2 = new double[4]{1,2,3,4};
-    double *vertorDeNumeros3 = new double[5]{9,8,7,6,5};
-    num = 4; Polinomio obj5(num, vertorDeNumeros2);
-    num = 5; Polinomio obj6(num, vertorDeNumeros3);
-    obj5 = obj5 + obj6;
-    cout << obj5<< endl;
-    obj5 = obj5 - obj6;
-    cout << obj5<< endl;;
-    delete[] vertorDeNumeros2; delete[] vertorDeNumeros3;
-
-    cout << "teste somar constante" <<endl;
-    obj5 = obj5+2.0;
-    cout << obj5<< endl;
-    
-    cout << "teste +=" <<endl;
-    obj5+= obj6;
-    cout << obj5<< endl;
-
-    cout << "teste subtrair constante" <<endl;
-    obj5 = obj5-2.0;
-    cout << obj5<< endl;
-    
-    cout << "teste -=" <<endl;
-    obj5-= obj6;
-    cout << obj5<< endl;
-
-    cout << "teste multiplicacao" <<endl;
-    double *vertorDeNumeros4 = new double[2]{1,2};
-    double *vertorDeNumeros5 = new double[3]{3,4,4};
-    num = 2; Polinomio obj7(num, vertorDeNumeros4);
-    num = 3; Polinomio obj8(num, vertorDeNumeros5);
-    Polinomio obj9 = obj7 * obj8;
-    cout << obj9 << endl;;
-    delete[] vertorDeNumeros4;
-    delete[] vertorDeNumeros5;
-
-    cout << "teste multiplicar constante" <<endl;
-    obj9 = obj7 * 3;
-    cout << obj9<< endl;;
-    
-    cout << "teste *=" <<endl;
-    cout << obj7 << endl << obj8 << endl;
-    obj7 *= obj8;
-    cout << obj7<< endl;
-
-    cout << "teste *= constante" <<endl;
-    obj7 *= 3;
-    cout << obj7<< endl;;
-    
-    cout << "teste /= constatante" <<endl;
-    obj7 /= 2;
-    cout << obj7 << endl;
-    
-    cout << "teste dividir constante" <<endl;
-    obj9 = obj9 / 3;
-    cout << obj9 << endl;
-
-    cout << "teste ++" <<endl;
-    for (int i = 0; i < 2; i++)
+int main(int argc, char **argv){
+    if (strcmp(argv[1], "exemplo") == 0)//mostra um exemplo das fucionalidades presentes neste progama
     {
-        ++obj9;
-        cout << i << " , " << obj9 << endl;
-    }
-    for (int i = 0; i < 2; i++)
-    {
-        cout << i << " , " << obj9++ << endl;
-    }
-    cout << obj9 << endl;
-
-    cout << "teste divisao" <<endl;
-    vertorDeNumeros4 = new double[2]{-2,1};
-    num = 2; Polinomio obj10(num, vertorDeNumeros4);
-    cout << obj10 << " obj10\n";
-    vertorDeNumeros5 = new double[6]{1,0,3,0,-2,3};
-    num = 6; Polinomio obj11(num, vertorDeNumeros5);
-    cout << obj11 << " obj11\n";
-    obj11 = obj11 / obj10;
-    cout << obj11 << " obj11/obj10\n";
-    delete[]vertorDeNumeros4; delete[] vertorDeNumeros5;
-
-    cout << "teste divisao" <<endl;
-    vertorDeNumeros4 = new double[2]{-2,1};
-    num = 2; Polinomio obj12(2);
-    cout << obj12 << " obj12\n";
-    vertorDeNumeros5 = new double[4]{-1,3,-2,5};
-    num = 4; Polinomio obj13(num, vertorDeNumeros5);
-    cout << obj13 << " obj13\n";
-    Polinomio obj14 = obj13 / obj12;
-    cout << obj14 << " obj13/obj12\n";
-    delete[]vertorDeNumeros4; delete[] vertorDeNumeros5;
-
-    cout << "teste /=" <<endl;
-    obj14 = obj13;
-    obj14 /= obj12;
-    cout << obj14 << endl;
-
-    cout << "teste resto divisao" <<endl;
-    cout << obj13 % obj12 << endl;
-
-    cout << "teste %=" <<endl;
-    obj14 = obj13;
-    obj14 %= obj12;
-    cout << obj14 << endl;
-
-    cout << "teste []" <<endl;
-    cout << obj13[2] << endl;
+       exemplo();
+    }   
     
-    cout << "teste avalia" <<endl;
-    vertorDeNumeros = new double[6]{1,-3,7,5,-2,3}; num = 6;
-    Polinomio obj15(num, vertorDeNumeros);
-    cout << obj15 << endl;
-    cout << obj15.avalia(4) << endl;
-    delete[] vertorDeNumeros;
-
-    cout << "teste derivada" <<endl;
-    cout << obj15.derivada() << endl;
-
-    cout << "teste >>" <<endl;
-    Polinomio obj16(obj15);
-    cin >> obj16;
-    cout << obj16 << endl;
-    
-    cout << "teste ==" <<endl;
-    obj14 = obj15;
-    if (obj14 == obj15)
-    {
-        cout << " deu certo\n";
-    }
-    if (obj14 == obj13)
-    {
-        cout << " deu errado\n";
-    }
-
-    cout << endl;
-
-    cout << "teste resolve\n";
-    int numraizes;
-    vertorDeNumeros =  new double[4]{5,-9,0,1};
-    num = 4; Polinomio obj17(num, vertorDeNumeros);
-    cout << obj17 << endl;
-    double* r = obj17.resolve(numraizes);
-
-    for (int i = 0; i < numraizes; i++)
-    {
-        cout << r[i] << endl;
-    }
-    delete[] vertorDeNumeros;
-    free(r);
 
     return 0;
 }
