@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string.h>
 #include <time.h>
+#include <stdlib.h>
 using namespace std;
 
 void soma(Polinomio &base, Polinomio &copia, Polinomio &resultado, Polinomio &auxiliar){
@@ -52,7 +53,7 @@ void derivada(Polinomio &auxiliar){
 }
 
 void avalia(Polinomio &auxiliar){
-    double x = (rand()%11);
+    double x = (rand()%11 + 1);
     cout << "Avalia(" << auxiliar << ") p/ x = " << x << endl;
     cout << "= " << auxiliar.avalia(x) << endl << endl;
 }
@@ -86,11 +87,11 @@ void exemplo(){
     Polinomio base(6,vetor1);
     delete[] vetor1;
 
-    int numAleatorio = rand() % 11;
+    int numAleatorio = rand() % 11 + 1;
     vetor1 = new double[numAleatorio];
     for (int i = 0; i < numAleatorio; i++)
     {
-        vetor1[i] = rand() % 101;
+        vetor1[i] = rand() % 101 + 1;
     }
     Polinomio auxiliar(numAleatorio, vetor1);
     delete[] vetor1;
@@ -108,7 +109,7 @@ void exemplo(){
     multiplicacao(base, copia, resultado, auxiliar);
 
     cout << "DIVISAO\n";
-    vetor1 = new double[2]{(double)(-rand()%11),1};
+    vetor1 = new double[2]{(double)(-(rand()%11) - 1),1};
     Polinomio auxiliarDivisao(2,vetor1);
     delete[] vetor1;
     divisao(base, copia, resultado, auxiliar, auxiliarDivisao);
@@ -122,8 +123,8 @@ void exemplo(){
     cout << "RESOLVE\n";
     resolve(auxiliar);
 
-    double n = (rand()%11);
-    cout << "exemplo de calculo: P(" << n <<"){(++(" << base <<") * 2) - (" << auxiliar << ") * 2) / (" 
+    double n = (rand()%11 + 1);
+    cout << "\nExemplo de calculo: P(" << n <<"){(++(" << base <<") * 2) - (" << auxiliar << ") * 2) / (" 
     << auxiliarDivisao << ")} + " << "P(" << n <<"){(" << "derivada(" <<auxiliar << ")} - " 
     << "((" << auxiliar << ") % (" << auxiliarDivisao << "))\n";
     
@@ -133,13 +134,66 @@ void exemplo(){
 
 }
 
+double* criaPolinomio(int& tamanhoVetor){
+    cout << "\nDigite 1 polinomio da forma nx^0, nx^1,...,nx^m\n(Eh nescessario digitar somente os coeficientes)\n";
+    tamanhoVetor = 15;
+    double * vetorPolinomioUsuario = (double *) calloc(tamanhoVetor,sizeof(double));
+    char entrada[10];
+    for (int i = 0; ;i++)
+    {
+        if (i == tamanhoVetor-2)
+        {
+            tamanhoVetor*=2;
+            vetorPolinomioUsuario = (double *) realloc(vetorPolinomioUsuario, sizeof(double)*tamanhoVetor);
+        }
+        cin >> entrada;
+        if (strcmp(entrada, "a") == 0)
+        {
+            tamanhoVetor = i+1;
+            vetorPolinomioUsuario = (double *) realloc(vetorPolinomioUsuario, sizeof(double)*tamanhoVetor);
+            break;
+        }
+        vetorPolinomioUsuario[i] = atof(entrada);
+    }
+    
+    return vetorPolinomioUsuario;
+}
 
 int main(int argc, char **argv){
     if (strcmp(argv[1], "exemplo") == 0)//mostra um exemplo das fucionalidades presentes neste progama
     {
-       exemplo();
-    }   
-    
+        exemplo();
+        
+        char interacao1;
+        
+        while(true){
+            cout << "Deseja ver o exemplo novamente com diferentes polinomios?! (s/n): ";
+            cin >> interacao1;
+            if (interacao1 == 's' || interacao1 == 'S')
+            {
+                exemplo();
+            }
+            else
+            {
+                break;
+            }
+        }          
+    } 
+
+    cout << "Deseja ir para o modo interativo?! (s/n): ";
+    char interacao2;
+    cin >> interacao2;
+    if (interacao2 == 'n' || interacao2 == 'n')
+    {
+        return 0;
+    }
+    else if (interacao2 == 's' || interacao2 == 'S'){
+        int tamanhoVetor;
+        double *vetorPolinomioUsuario = criaPolinomio(tamanhoVetor);
+        Polinomio A(tamanhoVetor, vetorPolinomioUsuario);
+        free(vetorPolinomioUsuario);
+        cout << A << endl;
+    }
 
     return 0;
 }
