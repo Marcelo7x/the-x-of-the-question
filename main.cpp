@@ -96,6 +96,7 @@ void resolve(Polinomio &auxiliar)
             cout << raizes[i] << ", ";
         }
         cout << "}\n\n";
+        free(raizes);
     }
 }
 
@@ -167,7 +168,7 @@ double *criaPolinomio(int &tamanhoVetor)
             vetorPolinomioUsuario = (double *)realloc(vetorPolinomioUsuario, sizeof(double) * tamanhoVetor);
         }
         cin >> entrada;
-        if (strcmp(entrada, "a") == 0)
+        if (strcmp(entrada, "f") == 0)
         {
             tamanhoVetor = i + 1;
             vetorPolinomioUsuario = (double *)realloc(vetorPolinomioUsuario, sizeof(double) * tamanhoVetor);
@@ -196,13 +197,33 @@ void operacao(Polinomio &A)
 
         if (user == 1 || user == 2 || user == 3 || user == 4 || user == 5 || user == 7)
         {
-            cout << "Digite outro polinomio da forma nx^0, nx^1,...,nx^m para fazer a operacao:\n";
+            cout << "Fazer a oparecao com outro polinomio ou constante?!\n 1) Polinomio\n 2) constante\n-->";
+            int polinomioOuConstante;
+            cin >> polinomioOuConstante;
+            if (polinomioOuConstante == 1)
+            {            
+                cout << "Digite outro polinomio da forma nx^0, nx^1,...,nx^m para fazer a operacao:\n";
+                cout << "Digite 'f' quando acabar o polinomio\n";
+            }
+            else if (polinomioOuConstante == 2)
+            {            
+                cout << "Digite uma constante para fazer a operacao:\n";
+                cout << "Digite 'f' apos digitar a constante\n";
+            }
             vetor2PolinomioUsuario = criaPolinomio(tamanhoDoVetor);
+            double constante = vetor2PolinomioUsuario[0];
             cout << endl;
             Polinomio B(tamanhoDoVetor, vetor2PolinomioUsuario);
             Bcriado = true;
             copiaB = B;
-            cout << "Polinomio B: " << B << endl << endl;
+            if (polinomioOuConstante == 1)
+            {
+                cout << "Polinomio B: " << B << endl << endl;
+            }
+            if (polinomioOuConstante == 2)
+            {
+                cout << "Constante : " << B << endl << endl;
+            }
             free(vetor2PolinomioUsuario);
 
             switch (user)
@@ -211,9 +232,14 @@ void operacao(Polinomio &A)
                 cout << " 1) +\n ou\n 2) +=\n-->";
                 cin >> user2;
                 cout << endl;
-                if (user2 == 1)
+                if (user2 == 1 && polinomioOuConstante ==  1)
                 {
                     Polinomio C = A + B;
+                    cout << C << endl << endl;
+                }
+                else if (user2 == 1 && polinomioOuConstante ==  2)
+                {
+                    Polinomio C = A + constante;
                     cout << C << endl << endl;
                 }
                 else if (user2 == 2)
@@ -227,9 +253,14 @@ void operacao(Polinomio &A)
                 cout << " 1) -\n ou\n 2) -=\n--> ";
                 cin >> user2;
                 cout << endl;
-                if (user2 == 1)
+                if (user2 == 1 && polinomioOuConstante ==  1)
                 {
                     Polinomio C = A - B;
+                    cout << C << endl << endl;
+                }
+                else if (user2 == 1 && polinomioOuConstante ==  2)
+                {
+                    Polinomio C = A - constante;
                     cout << C << endl << endl;
                 }
                 else if (user2 == 2)
@@ -243,9 +274,14 @@ void operacao(Polinomio &A)
                 cout << " 1) *\n ou\n 2) *=\n--> ";
                 cin >> user2;
                 cout << endl;
-                if (user2 == 1)
+                if (user2 == 1 && polinomioOuConstante ==  1)
                 {
                     Polinomio C = A * B;
+                    cout << C << endl << endl;
+                }
+                else if (user2 == 1 && polinomioOuConstante ==  2)
+                {
+                    Polinomio C = A * constante;
                     cout << C << endl << endl;
                 }
                 else if (user2 == 2)
@@ -259,9 +295,14 @@ void operacao(Polinomio &A)
                 cout << " 1) /\n ou\n 2) /=\n--> ";
                 cin >> user2;
                 cout << endl;
-                if (user2 == 1)
+                if (user2 == 1 && polinomioOuConstante ==  1)
                 {
                     Polinomio C = A / B;
+                    cout << C << endl << endl;
+                }
+                if (user2 == 1 && polinomioOuConstante ==  2)
+                {
+                    Polinomio C = A / polinomioOuConstante;
                     cout << C << endl << endl;
                 }
                 else if (user2 == 2)
@@ -403,14 +444,14 @@ int main(int argc, char **argv)
     {
         exemplo();
 
-        char interacao1;
+        int interacao1;
 
         while (true)
         {
-            cout << "Deseja ver o exemplo novamente com diferentes polinomios?! (s/n): \n-->";
+            cout << "Deseja ver o exemplo novamente com diferentes polinomios?!\n 1) Sim\n 2) Nao \n-->";
             cin >> interacao1;
             cout << endl;
-            if (interacao1 == 's' || interacao1 == 'S')
+            if (interacao1 == '1')
             {
                 exemplo();
             }
@@ -421,19 +462,19 @@ int main(int argc, char **argv)
         }
     }
 
-    cout << "Deseja ir para o modo interativo?! (s/n): \n-->>";
-    char interacao2;
+    cout << "Deseja ir para o modo interativo?!\n 1) Sim\n 2) Nao  \n-->>";
+    int interacao2;
     cin >> interacao2;
     cout << endl;
-    if (interacao2 == 'n' || interacao2 == 'n')
+    if (interacao2 == 2)
     {
         return 0;
     }
-    else if (interacao2 == 's' || interacao2 == 'S')
+    else if (interacao2 == 1)
     {
         int tamanhoVetor;
         cout << "Digite 1 polinomio da forma nx^0, nx^1,...,nx^m\n(Eh nescessario digitar somente os coeficientes)\n";
-        cout << "DIGITE 'a' QUANDO QUISER PARAR\n";
+        cout << "DIGITE 'f' QUANDO QUISER PARAR\n";
         double *vetorPolinomioUsuario = criaPolinomio(tamanhoVetor);
         cout << endl;
         Polinomio A(tamanhoVetor, vetorPolinomioUsuario);

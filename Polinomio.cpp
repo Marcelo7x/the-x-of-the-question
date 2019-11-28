@@ -100,6 +100,9 @@ Polinomio Polinomio::operator+(const double &num) const {
     
     return objSomaConstante;
 }
+Polinomio operator+(double num, const Polinomio &obj){
+    return obj+num;
+}
 
 Polinomio & Polinomio::operator+=(const Polinomio &obj) {
     Polinomio const *menor;
@@ -133,7 +136,7 @@ Polinomio & Polinomio::operator+=(const Polinomio &obj) {
 //adiciona um polinomio a um numero
 Polinomio & Polinomio::operator+=(const double &num) {
     x[0] += num;    //soma a posicao 0 onde esta a constante
-
+    return *this;
 }
 
 //Subtraçao
@@ -165,6 +168,9 @@ Polinomio Polinomio::operator-(const double &num) const {
     objSubtracaoConstante.x[0] -= num;
     
     return objSubtracaoConstante;
+}
+Polinomio operator-(double num, const Polinomio &obj){
+    return obj-num;
 }
 
 Polinomio & Polinomio::operator-=(const Polinomio &obj) {
@@ -228,6 +234,9 @@ Polinomio Polinomio::operator*(const double &num) const {
 
     return objMultiplicacao;
 }
+Polinomio operator*(double num, const Polinomio &obj){
+    return obj*num;
+}
 Polinomio & Polinomio::operator*=(const Polinomio &obj) {
     double *vetorAux = (double*) calloc((obj.n + this->n),sizeof(double));//vetor auxiliar para criacao do objeto auxiliar
     Polinomio objaux((obj.n + this->n), vetorAux);
@@ -252,7 +261,7 @@ Polinomio & Polinomio::operator*=(const double &num) {
     return *this;
 }
 
-//Divisao por polinomio de grau 1 da forma (x-a)
+//Divisao por polinomio de grau 1 da forma (x-a) 
 Polinomio Polinomio::operator/(const Polinomio &obj) const {///////PRECISA DE UMA EXCESSAO AKI
     Polinomio objDivisao(*this);
     free(objDivisao.x);
@@ -272,7 +281,7 @@ Polinomio Polinomio::operator/(const Polinomio &obj) const {///////PRECISA DE UM
     return objDivisao;
 }
 
-Polinomio & Polinomio::operator/=(const Polinomio &obj) {
+Polinomio & Polinomio::operator/=(const Polinomio &obj) {//PRECISA DE EXCESSAO
     Polinomio objDivisao(*this);
     free(objDivisao.x);
     objDivisao.x = (double*) calloc(n-1, sizeof(double));
@@ -293,7 +302,7 @@ Polinomio & Polinomio::operator/=(const Polinomio &obj) {
     return *this;
 }
 //divide por um numero
-Polinomio Polinomio::operator/(const int &num) const {
+Polinomio Polinomio::operator/(const int &num) const {//PRECISA DE EXCESSAO
     Polinomio objDivisao(*this);
 
     for (int i = 0; i < n; i++)//divide todos polinomios pela constante
@@ -303,7 +312,19 @@ Polinomio Polinomio::operator/(const int &num) const {
 
     return objDivisao;
 }
-Polinomio & Polinomio::operator/=(const int &num) {
+Polinomio operator/(double num, const Polinomio &obj){//EXCESSAO
+    if (obj.n == 1)
+    {
+       Polinomio aux(num/obj.x[0]);
+        return aux;
+    }
+    else
+    {
+        Polinomio aux;
+        return aux;
+    }
+}
+Polinomio & Polinomio::operator/=(const int &num) {//PRECISA DE EXCESSAO
     for (int i = 0; i < n; i++)
     {
         x[i] /= num;
@@ -384,7 +405,7 @@ Polinomio Polinomio::operator++(int) { //++ pos fixado
 //igualdade (verifica se dois polinomios tem  o mesmo grau e coeficientes)
 bool Polinomio::operator==(const Polinomio &obj) const {
     if(n != obj.n) return false;
-    const double EPSILON = 1e-10;
+    const double EPSILON = 1e-15;
 
     for (int i = 0; i < n; i++)
     {
@@ -512,7 +533,7 @@ double Polinomio::avalia(double num) const {
 }
 
 //Resolve P(x)=0. Encontra raízes reais do polinomio
-double* Polinomio::resolve(int &numRaizes) const {/////////PRECISA DE UMA EXCECAO AKI
+double* Polinomio::resolve(int &numRaizes) const {
     if (n == 2)//do primeiro grau 
     {
         double *raiz = (double*) malloc(sizeof(double));

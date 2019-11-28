@@ -40,12 +40,14 @@ class Polinomio {
 		Polinomio operator+(const Polinomio &) const;
 		//adiciona um polinomio a um numero
 		Polinomio operator+(const double &) const;
+		friend Polinomio operator+(double , const Polinomio &);
 		Polinomio & operator+=(const Polinomio &);
 		Polinomio & operator+=(const double &);
 		
 		// subtração (segue o mesmo padrão da adição)
 		Polinomio operator-(const Polinomio &) const;
 		Polinomio operator-(const double &) const;
+		friend Polinomio operator-(double , const Polinomio &);
 		Polinomio & operator-=(const Polinomio &);
 		Polinomio & operator-=(const double &);
 		
@@ -53,6 +55,7 @@ class Polinomio {
 		// TODO: você também deve implementar a multiplicação por um número à esquerda
 		Polinomio operator*(const Polinomio &) const;
 		Polinomio operator*(const double &) const;
+		friend Polinomio operator*(double , const Polinomio &);
 		Polinomio & operator*=(const Polinomio &);
 		Polinomio & operator*=(const double &);
 		
@@ -60,6 +63,7 @@ class Polinomio {
 // deve lançar 'ArgumentoInvalidoExcept' se o denominador não for da forma especificada acima
 // Sugestão: https://pt.wikipedia.org/wiki/Algoritmo_de_Briot-Ruffini
 		Polinomio operator/(const Polinomio &) const;
+		friend Polinomio operator/(double , const Polinomio &);
 		Polinomio & operator/=(const Polinomio &);
 
 		// divide os coeficiente por um número 
