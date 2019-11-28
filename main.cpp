@@ -170,12 +170,13 @@ double *criaPolinomio(int &tamanhoVetor)
         cin >> entrada;
         if (strcmp(entrada, "f") == 0)
         {
-            tamanhoVetor = i + 1;
+            tamanhoVetor = i;
             vetorPolinomioUsuario = (double *)realloc(vetorPolinomioUsuario, sizeof(double) * tamanhoVetor);
             break;
         }
         vetorPolinomioUsuario[i] = atof(entrada);
     }
+    cout << tamanhoVetor << "t" << endl;
 
     return vetorPolinomioUsuario;
 }
@@ -451,7 +452,7 @@ int main(int argc, char **argv)
             cout << "Deseja ver o exemplo novamente com diferentes polinomios?!\n 1) Sim\n 2) Nao \n-->";
             cin >> interacao1;
             cout << endl;
-            if (interacao1 == '1')
+            if (interacao1 == 1)
             {
                 exemplo();
             }
