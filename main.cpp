@@ -493,7 +493,7 @@ int main(int argc, char **argv)
             cout << "Deseja ver o exemplo novamente com diferentes polinomios?!\n 1) Sim\n 2) Nao \n-->";
             cin >> interacao1;
             cout << endl;
-            if (interacao1 == '1')
+            if (interacao1 == 1)
             {
                 exemplo();
             }
