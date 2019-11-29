@@ -41,7 +41,7 @@ void multiplicacao(Polinomio &base, Polinomio &copia, Polinomio &resultado, Poli
 }
 
 void divisao(Polinomio &base, Polinomio &copia, Polinomio &resultado, Polinomio &auxiliar, Polinomio &auxiliarDivisao)
-{
+{   try{
     cout << '(' << base << ')' << " / " << '(' << auxiliarDivisao << ')' << endl;
     resultado = base / auxiliarDivisao;
     cout << "= " << resultado << endl
@@ -59,6 +59,10 @@ void divisao(Polinomio &base, Polinomio &copia, Polinomio &resultado, Polinomio 
     copia %= auxiliarDivisao;
     cout << "%= " << copia << endl
          << endl;
+    }catch(...){
+        cout << "nao e possivel dividir um polinomio dessa ordem ou houve divisao por 0" << endl;
+        exit(0);
+    }
 }
 
 void derivada(Polinomio &auxiliar)
@@ -143,16 +147,22 @@ void exemplo()
 
     cout << "RESOLVE\n";
     resolve(auxiliar);
-
-    double n = (rand() % 11 + 1);
-    cout << "\nExemplo de calculo: P(" << n << "){(++(" << base << ") * 2) - (" << auxiliar << ") * 2) / ("
-         << auxiliarDivisao << ")} + "
-         << "P(" << n << "){("
-         << "derivada(" << auxiliar << ")} - "
-         << "((" << auxiliar << ") % (" << auxiliarDivisao << "))\n";
-
-    cout << "= " << ((++base * 2) - ((auxiliar * 2) / auxiliarDivisao)).avalia(n) + (auxiliar.derivada().avalia(n)) - (auxiliar % auxiliarDivisao).avalia(0);
-    cout << endl;
+    
+    try{
+        double n = (rand() % 11 + 1);
+        cout << "\nExemplo de calculo: P(" << n << "){(++(" << base << ") * 2) - (" << auxiliar << ") * 2) / ("
+            << auxiliarDivisao << ")} + "
+            << "P(" << n << "){("
+            << "derivada(" << auxiliar << ")} - "
+            << "((" << auxiliar << ") % (" << auxiliarDivisao << "))\n";
+        cout << "= " << ((++base * 2) - ((auxiliar * 2) / auxiliarDivisao)).avalia(n) + (auxiliar.derivada().avalia(n)) - (auxiliar % auxiliarDivisao).avalia(0);
+        cout << endl << endl;
+    }
+    catch(...){
+        cout << "Nao e possivel dividir por um polinomio dessa ordem ou houve divisao por 0\n";
+        exit(0);
+}
+    
 }
 
 double *criaPolinomio(int &tamanhoVetor)
@@ -176,7 +186,6 @@ double *criaPolinomio(int &tamanhoVetor)
         }
         vetorPolinomioUsuario[i] = atof(entrada);
     }
-    cout << tamanhoVetor << "t" << endl;
 
     return vetorPolinomioUsuario;
 }
@@ -211,19 +220,21 @@ void operacao(Polinomio &A)
                 cout << "Digite uma constante para fazer a operacao:\n";
                 cout << "Digite 'f' apos digitar a constante\n";
             }
+            
             vetor2PolinomioUsuario = criaPolinomio(tamanhoDoVetor);
             double constante = vetor2PolinomioUsuario[0];
             cout << endl;
             Polinomio B(tamanhoDoVetor, vetor2PolinomioUsuario);
             Bcriado = true;
             copiaB = B;
+           
             if (polinomioOuConstante == 1)
             {
                 cout << "Polinomio B: " << B << endl << endl;
             }
             if (polinomioOuConstante == 2)
             {
-                cout << "Constante : " << B << endl << endl;
+                cout << "Constante : " << constante << endl << endl;
             }
             free(vetor2PolinomioUsuario);
 
@@ -298,18 +309,36 @@ void operacao(Polinomio &A)
                 cout << endl;
                 if (user2 == 1 && polinomioOuConstante ==  1)
                 {
-                    Polinomio C = A / B;
-                    cout << C << endl << endl;
+                    try{
+                        Polinomio C = A / B;
+                        cout << C << endl << endl;
+                    }
+                    catch(...){
+                        cout << "Nao e possivel dividir por um polinomio dessa ordem ou houve divisao por 0\n";
+                        exit(0);
+                    }
                 }
                 if (user2 == 1 && polinomioOuConstante ==  2)
-                {
-                    Polinomio C = A / polinomioOuConstante;
-                    cout << C << endl << endl;
+                {   
+                    try{
+                        Polinomio C = A / polinomioOuConstante;
+                        cout << C << endl << endl;
+                    }
+                    catch(...){
+                        cout << "Nao e possivel dividir por um polinomio dessa ordem ou houve divisao por 0\n";
+                        exit(0);
+                }
                 }
                 else if (user2 == 2)
-                {
-                    A /= B;
-                    cout << A << endl << endl;
+                {   
+                    try{
+                        A /= B;
+                        cout << A << endl << endl;
+                    }
+                    catch(...){
+                        cout << "Nao e possivel dividir por um polinomio dessa ordem ou houve divisao por 0\n";
+                        exit(0);
+                    }
                 }
                 break;
 
@@ -318,14 +347,26 @@ void operacao(Polinomio &A)
                 cin >> user2;
                 cout << endl;
                 if (user2 == 1)
-                {
-                    Polinomio C = A % B;
-                    cout << C << endl << endl;
+                {   
+                    try{
+                        Polinomio C = A % B;
+                        cout << C << endl << endl;
+                    }
+                    catch(...){
+                        cout << "Nao e possivel dividir por um polinomio dessa ordem ou houve divisao por 0\n";
+                        exit(0);
+                    }
                 }
                 else if (user2 == 2)
                 {
-                    A %= B;
-                    cout << A << endl << endl;
+                    try{
+                        A %= B;
+                        cout << A << endl << endl;
+                    }
+                    catch(...){
+                        cout << "Nao e possivel dividir por um polinomio dessa ordem ou houve divisao por 0\n";
+                        exit(0);
+                    }
                 }
                 break;
             
@@ -413,7 +454,7 @@ void operacao(Polinomio &A)
             {
                 cout << "Funcao indisponivel, B nao foi criado anteriomente \nCrie um novo Polinomio\n";
                 cout << "\nDigite 1 polinomio da forma nx^0, nx^1,...,nx^m\n(Eh nescessario digitar somente os coeficientes)\n";
-                cout << "DIGITE 'a' QUANDO QUISER PARAR\n";
+                cout << "DIGITE 'f' QUANDO QUISER PARAR\n";
                 vetor2PolinomioUsuario = criaPolinomio(tamanhoDoVetor);
                 Polinomio aux(tamanhoDoVetor, vetor2PolinomioUsuario);
                 free(vetor2PolinomioUsuario);
@@ -423,7 +464,7 @@ void operacao(Polinomio &A)
             else if (user2 == 3)
             {
                 cout << "\nDigite 1 polinomio da forma nx^0, nx^1,...,nx^m\n(Eh nescessario digitar somente os coeficientes)\n";
-                cout << "DIGITE 'a' QUANDO QUISER PARAR\n";
+                cout << "DIGITE 'f' QUANDO QUISER PARAR\n";
                 vetor2PolinomioUsuario = criaPolinomio(tamanhoDoVetor);
                 Polinomio aux(tamanhoDoVetor, vetor2PolinomioUsuario);
                 free(vetor2PolinomioUsuario);
@@ -452,7 +493,7 @@ int main(int argc, char **argv)
             cout << "Deseja ver o exemplo novamente com diferentes polinomios?!\n 1) Sim\n 2) Nao \n-->";
             cin >> interacao1;
             cout << endl;
-            if (interacao1 == 1)
+            if (interacao1 == '1')
             {
                 exemplo();
             }

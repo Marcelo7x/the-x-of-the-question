@@ -5,7 +5,8 @@
 #include <math.h>
 
 using namespace std;
-class erro{};
+class erroDivisao{};
+class erroPosicaoInvalida{};
 
 //notacao potencia "^" ... exemplo: x^2 (x elevado a 2) 
 
@@ -264,13 +265,13 @@ Polinomio & Polinomio::operator*=(const double &num) {
 
 //Divisao por polinomio de grau 1 da forma (x-a) 
 Polinomio Polinomio::operator/(const Polinomio &obj) const {///////PRECISA DE UMA EXCESSAO AKI
+    if(obj.n!=2 || this->n<2)
+        throw erroDivisao();
+        
     Polinomio objDivisao(*this);
     free(objDivisao.x);
     objDivisao.x = (double*) calloc(n-1, sizeof(double)); //cria um obj de tamanho n-1 
     objDivisao.n = n-1;
-    
-    if(obj.n!=2 || this->n<2)
-        throw erro();
         
     for (int i = objDivisao.n-1; i >= 0; i--)//aplica Briot-Ruffini
     {
@@ -293,7 +294,7 @@ Polinomio & Polinomio::operator/=(const Polinomio &obj) {//PRECISA DE EXCESSAO
     objDivisao.n = n-1;
     
     if(obj.n!=2 || this->n<2)
-        throw erro();
+        throw erroDivisao();
     
     for (int i = objDivisao.n-1; i >= 0; i--)
     {
@@ -315,7 +316,7 @@ Polinomio Polinomio::operator/(const int &num) const {//PRECISA DE EXCESSAO
     Polinomio objDivisao(*this);
     
     if(num==0)
-        throw erro();
+        throw erroDivisao();
 
     for (int i = 0; i < n; i++)//divide todos polinomios pela constante
     {
@@ -339,7 +340,7 @@ Polinomio operator/(double num, const Polinomio &obj){//EXCESSAO
 Polinomio & Polinomio::operator/=(const int &num) {//PRECISA DE EXCESSAO
 
     if(num==0)
-        throw erro();
+        throw erroDivisao();
         
     for (int i = 0; i < n; i++)
     {
@@ -356,7 +357,7 @@ Polinomio Polinomio::operator%(const Polinomio &obj) const {////////PRECISA DE U
     objDivisao.n = n-1;
     
     if(obj.n!=2 || this->n<2)
-        throw erro();
+        throw erroDivisao();
     
     for (int i = objDivisao.n-1; i >= 0; i--)//Briot-Ruffini
     {
@@ -383,7 +384,7 @@ Polinomio & Polinomio::operator%=(const Polinomio &obj) {////////PRECISA DE UMA 
     objDivisao.x = (double*) calloc(n-1, sizeof(double));
     objDivisao.n = n-1;
     if(obj.n!=2 || this->n<2)
-        throw erro();
+        throw erroDivisao();
         
     for (int i = objDivisao.n-1; i >= 0; i--)
     {
@@ -408,8 +409,8 @@ Polinomio & Polinomio::operator%=(const Polinomio &obj) {////////PRECISA DE UMA 
 
 //Retorna o i-esimo coeficiente
 double Polinomio::operator[](int num) const {//////////PRECISA DE UMA EXCECAO AKI
-    if(num<0 || num > n)
-        throw erro();
+    if(num<0 || num > n-1)
+        throw erroPosicaoInvalida();
     return x[num];
 }
 
