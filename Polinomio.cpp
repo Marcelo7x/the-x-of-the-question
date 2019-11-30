@@ -11,14 +11,14 @@ class erroPosicaoInvalida{};
 //notacao potencia "^" ... exemplo: x^2 (x elevado a 2) 
 
 //Construtor padrão. Representa numero 0
-Polinomio::Polinomio() {//Aloca 1 posicao, colooca o valor 0
+Polinomio::Polinomio() {//Aloca 1 posicao, coloca o valor 0
     n = 1;
     x = (double*) malloc(sizeof(double)*n);
     x[0] = 0;
 }
 
 //Cria um polinomio a partir de um numero inteiro (positivo ou negativo)
-Polinomio::Polinomio(const int num) {//Aloca um vetor de 2 posicoes, cada o numero da posicao idica o grau
+Polinomio::Polinomio(const int num) {       //Aloca um vetor de 2 posicoes, cada posicao indica o grau
     this->n = 2;                            //do polinomio, exemplo: x[3] = 2 equivale as 2x^3
     x = (double*) malloc(sizeof(double)*n);
     x[0] = 0;
@@ -39,7 +39,7 @@ Polinomio::Polinomio(unsigned int num, double *a) {
 Polinomio::Polinomio(const Polinomio &obj) { 
     x = (double*) malloc(sizeof(double)*(obj.n));
     
-    for (int i = 0; i < obj.n; i++) // copia os polinomio do objeto
+    for (int i = 0; i < obj.n; i++)         // copia os polinomio do objeto
     {
         x[i] = obj.x[i];
     }
@@ -58,12 +58,12 @@ Polinomio & Polinomio::operator=(const Polinomio &obj) {
     if(this == &obj)    //verifica se e o mesmo objeto
         return *this;
     
-    n = obj.n;  //copia o tamanho do vetor dos coeficientes
+    n = obj.n;      //copia o tamanho do vetor dos coeficientes
 
-    free(x);    //desaloca o vetor dos polinomios do objeto que seja modificado
-    x = (double*) malloc(sizeof(double)*n); //aloca o vetor, agora com o novo tamanho
+    free(x);        //desaloca o vetor dos polinomios do objeto que seja modificado
+    x = (double*) malloc(sizeof(double)*n);     //aloca o vetor, agora com o novo tamanho
     
-    for (int i = 0; i < n; i++) //copia os dados
+    for (int i = 0; i < n; i++)         //copia os dados
     {
         x[i] = obj.x[i];
     }
@@ -75,7 +75,7 @@ Polinomio & Polinomio::operator=(const Polinomio &obj) {
 Polinomio Polinomio::operator+(const Polinomio &obj) const {
     Polinomio const *menor;
     Polinomio const *maior;
-    if (n <= obj.n)         //verifica o tamanho do maior vetor de polinomio
+    if (n <= obj.n)             //verifica o tamanho do maior vetor de polinomio
     {
         menor = this;
         maior = &obj;
@@ -85,9 +85,9 @@ Polinomio Polinomio::operator+(const Polinomio &obj) const {
         maior = this;
         menor = &obj;
     }
-    Polinomio objSoma(*maior);  //objeto auxiliar 
+    Polinomio objSoma(*maior);          //objeto auxiliar 
 
-    for (int i = 0; i < menor->n; i++)  //soma os polinomios semelhantes
+    for (int i = 0; i < menor->n; i++)          //soma os polinomios semelhantes
     {
         objSoma.x[i] = x[i] + obj.x[i];
     }
@@ -98,7 +98,7 @@ Polinomio Polinomio::operator+(const Polinomio &obj) const {
 //adiciona um polinomio a um numero
 Polinomio Polinomio::operator+(const double &num) const {
     Polinomio objSomaConstante(*this);
-    objSomaConstante.x[0]+= num;    //soma o elemento a posicao 0, onde esta o termo independente
+    objSomaConstante.x[0]+= num;        //soma o elemento a posicao 0, onde esta o termo independente
     
     return objSomaConstante;
 }
@@ -110,23 +110,23 @@ Polinomio & Polinomio::operator+=(const Polinomio &obj) {
     Polinomio const *menor;
     Polinomio const *maior;
 
-    if (n <= obj.n) //verifica o tamanho do maior vetor de polinomios
+    if (n <= obj.n)         //verifica o tamanho do maior vetor de polinomios
     {
         menor = this;
         maior = &obj;
-        x = (double*) realloc(x, sizeof(double)*(maior->n));    //iguala o tamanho do vetor a ser modificado ao outro vetor
-        for (int i = menor->n; i < maior->n; i++)//copia os polinomios cujo nao ha termos semelhantes
+        x = (double*) realloc(x, sizeof(double)*(maior->n));        //iguala o tamanho do vetor a ser modificado ao outro vetor
+        for (int i = menor->n; i < maior->n; i++)       //copia os polinomios que nao possuem termos semelhantes
         {
             x[i] = obj.x[i];
         }
-    }                                                           //caso ele for menor
-    else
+    }
+    else                                            //caso ele seja menor
     {
         maior = this;
         menor = &obj;
     }
 
-    for (int i = 0; i < menor->n; i++)//soma os polinomios semelhantes
+    for (int i = 0; i < menor->n; i++)          //soma os polinomios semelhantes
     {
         x[i] += obj.x[i];
     }
@@ -137,7 +137,7 @@ Polinomio & Polinomio::operator+=(const Polinomio &obj) {
 }
 //adiciona um polinomio a um numero
 Polinomio & Polinomio::operator+=(const double &num) {
-    x[0] += num;    //soma a posicao 0 onde esta a constante
+    x[0] += num;            //soma a posicao 0 a constante
     return *this;
 }
 
@@ -183,7 +183,7 @@ Polinomio & Polinomio::operator-=(const Polinomio &obj) {
         menor = this;
         maior = &obj;
         x = (double*) realloc(x, sizeof(double)*(maior->n));
-        for (int i = menor->n; i < maior->n; i++)//copia os polinomios cujo nao ha termos semelhantes
+        for (int i = menor->n; i < maior->n; i++)           //copia os polinomios que nao possuem termos semelhantes
         {
             x[i] = obj.x[i];
         }
@@ -212,11 +212,11 @@ Polinomio & Polinomio::operator-=(const double &num) {
 
 //Multiplicação
 Polinomio Polinomio::operator*(const Polinomio &obj) const {
-    double *vetorAux = (double*) calloc((obj.n + this->n),sizeof(double));  //vetor auxiliar com o tamanho dos vetores
-    Polinomio objMultiplicacao((obj.n + this->n), vetorAux);                //dos objetos somados
+    double *vetorAux = (double*) calloc((obj.n + this->n),sizeof(double));          //vetor auxiliar com o tamanho dos vetores
+    Polinomio objMultiplicacao((obj.n + this->n), vetorAux);                        //dos objetos somados
     free(vetorAux);
 
-    for (int i = 0; i < this->n; i++)   //multiplica os polinomios, distributividade
+    for (int i = 0; i < this->n; i++)           //multiplica os polinomios, distributividade
     {
        for (int j = 0; j < obj.n ; j++)
        {
@@ -229,7 +229,7 @@ Polinomio Polinomio::operator*(const Polinomio &obj) const {
 Polinomio Polinomio::operator*(const double &num) const {
     Polinomio objMultiplicacao(*this);
 
-    for (int i = 0; i < n; i++) //multiplica todos polinomios pela constante
+    for (int i = 0; i < n; i++)             //multiplica todos polinomios pela constante
     {
         objMultiplicacao.x[i] *= num;
     }
@@ -240,7 +240,7 @@ Polinomio operator*(double num, const Polinomio &obj){
     return obj*num;
 }
 Polinomio & Polinomio::operator*=(const Polinomio &obj) {
-    double *vetorAux = (double*) calloc((obj.n + this->n),sizeof(double));//vetor auxiliar para criacao do objeto auxiliar
+    double *vetorAux = (double*) calloc((obj.n + this->n),sizeof(double));      //vetor auxiliar para criacao do objeto auxiliar
     Polinomio objaux((obj.n + this->n), vetorAux);
     free(vetorAux);
 
@@ -248,15 +248,15 @@ Polinomio & Polinomio::operator*=(const Polinomio &obj) {
     {
        for (int j = 0; j < obj.n ; j++)
        {
-           objaux.x[i+j] += x[i] * (obj.x[j]);//distributividade
+           objaux.x[i+j] += x[i] * (obj.x[j]);          //distributividade
        }
     }
-    (*this) = objaux;//copiar os resultados para o objeto a ser modificado
+    (*this) = objaux;           //copiar os resultados para o objeto a ser modificado
 
     return *this;
 }
 Polinomio & Polinomio::operator*=(const double &num) {
-    for (int i = 0; i < n; i++)//multiplica todos os polinomios pela constante 
+    for (int i = 0; i < n; i++)         //multiplica todos os polinomios pela constante 
     {
         x[i] *= num;
     }
@@ -264,16 +264,16 @@ Polinomio & Polinomio::operator*=(const double &num) {
 }
 
 //Divisao por polinomio de grau 1 da forma (x-a) 
-Polinomio Polinomio::operator/(const Polinomio &obj) const {///////PRECISA DE UMA EXCESSAO AKI
+Polinomio Polinomio::operator/(const Polinomio &obj) const {
     if(obj.n!=2 || this->n<2)
         throw erroDivisao();
         
     Polinomio objDivisao(*this);
     free(objDivisao.x);
-    objDivisao.x = (double*) calloc(n-1, sizeof(double)); //cria um obj de tamanho n-1 
+    objDivisao.x = (double*) calloc(n-1, sizeof(double));       //cria um objeto de tamanho n-1 
     objDivisao.n = n-1;
         
-    for (int i = objDivisao.n-1; i >= 0; i--)//aplica Briot-Ruffini
+    for (int i = objDivisao.n-1; i >= 0; i--)       //aplica Briot-Ruffini
     {
         if (i == objDivisao.n-1)
         {
@@ -287,7 +287,7 @@ Polinomio Polinomio::operator/(const Polinomio &obj) const {///////PRECISA DE UM
     return objDivisao;
 }
 
-Polinomio & Polinomio::operator/=(const Polinomio &obj) {//PRECISA DE EXCESSAO
+Polinomio & Polinomio::operator/=(const Polinomio &obj) {
     Polinomio objDivisao(*this);
     free(objDivisao.x);
     objDivisao.x = (double*) calloc(n-1, sizeof(double));
@@ -312,20 +312,20 @@ Polinomio & Polinomio::operator/=(const Polinomio &obj) {//PRECISA DE EXCESSAO
     return *this;
 }
 //divide por um numero
-Polinomio Polinomio::operator/(const int &num) const {//PRECISA DE EXCESSAO
+Polinomio Polinomio::operator/(const int &num) const {
     Polinomio objDivisao(*this);
     
     if(num==0)
         throw erroDivisao();
 
-    for (int i = 0; i < n; i++)//divide todos polinomios pela constante
+    for (int i = 0; i < n; i++)         //divide todos polinomios pela constante
     {
         objDivisao.x[i] /= num;
     }
 
     return objDivisao;
 }
-Polinomio operator/(double num, const Polinomio &obj){//EXCESSAO
+Polinomio operator/(double num, const Polinomio &obj){
     if (obj.n == 1)
     {
        Polinomio aux(num/obj.x[0]);
@@ -337,7 +337,7 @@ Polinomio operator/(double num, const Polinomio &obj){//EXCESSAO
         return aux;
     }
 }
-Polinomio & Polinomio::operator/=(const int &num) {//PRECISA DE EXCESSAO
+Polinomio & Polinomio::operator/=(const int &num) {
 
     if(num==0)
         throw erroDivisao();
@@ -350,7 +350,7 @@ Polinomio & Polinomio::operator/=(const int &num) {//PRECISA DE EXCESSAO
 }
 
 //resto da divisao por um polinomio grau 1 da forma (x-1)
-Polinomio Polinomio::operator%(const Polinomio &obj) const {////////PRECISA DE UM EXCESSAO AKI
+Polinomio Polinomio::operator%(const Polinomio &obj) const {
     Polinomio objDivisao(*this);
     free(objDivisao.x);
     objDivisao.x = (double*) calloc(n-1, sizeof(double));
@@ -359,7 +359,7 @@ Polinomio Polinomio::operator%(const Polinomio &obj) const {////////PRECISA DE U
     if(obj.n!=2 || this->n<2)
         throw erroDivisao();
     
-    for (int i = objDivisao.n-1; i >= 0; i--)//Briot-Ruffini
+    for (int i = objDivisao.n-1; i >= 0; i--)           //Aplica Briot-Ruffini
     {
         if (i == objDivisao.n-1)
         {
@@ -371,14 +371,14 @@ Polinomio Polinomio::operator%(const Polinomio &obj) const {////////PRECISA DE U
         } 
     }
     
-    objDivisao.x[0] = (-(obj.x[0]) * objDivisao.x[0]) + x[0];//Briot-Ruffini uma vez mais para achar o resto
-    objDivisao.x = (double*) realloc(objDivisao.x, sizeof(double));//realoca para o tamanho necessario para uma constante
+    objDivisao.x[0] = (-(obj.x[0]) * objDivisao.x[0]) + x[0];           //Briot-Ruffini uma vez mais para achar o resto
+    objDivisao.x = (double*) realloc(objDivisao.x, sizeof(double));         //realoca para o tamanho necessario para uma constante
     objDivisao.n = 1;
     
     return objDivisao;
 }
 
-Polinomio & Polinomio::operator%=(const Polinomio &obj) {////////PRECISA DE UMA EXCESSAO AKI
+Polinomio & Polinomio::operator%=(const Polinomio &obj) {
     Polinomio objDivisao(*this);
     free(objDivisao.x);
     objDivisao.x = (double*) calloc(n-1, sizeof(double));
@@ -408,18 +408,18 @@ Polinomio & Polinomio::operator%=(const Polinomio &obj) {////////PRECISA DE UMA 
 }
 
 //Retorna o i-esimo coeficiente
-double Polinomio::operator[](int num) const {//////////PRECISA DE UMA EXCECAO AKI
+double Polinomio::operator[](int num) const {
     if(num<0 || num > n-1)
         throw erroPosicaoInvalida();
     return x[num];
 }
 
 //incrementos (adicionar 1) ao termo constante
-Polinomio Polinomio::operator++() { // ++ prefixado
+Polinomio Polinomio::operator++() {         // ++ prefixado
     x[0] += 1;
     return *this;
 }
-Polinomio Polinomio::operator++(int) { //++ pos fixado 
+Polinomio Polinomio::operator++(int) {      //++ pos fixado 
     Polinomio obj(*this);
     x[0] += 1;
     
@@ -458,12 +458,12 @@ istream& operator>>(istream &is, Polinomio &obj) {
 }
 
 ostream& operator<<(ostream &os, const Polinomio &obj) {
-    bool sinal = false;//para verificar se pode imprimir um sinal
+    bool sinal = false;         //para verificar se pode imprimir um sinal
     
     for (int i = obj.n-1; i >= 0; i--)
     { 
-        if(sinal && obj.x[i] > 0)//verifica se imprimu algum polinomio, em caso afirmativo imprime o sinal 
-        {                        //que acompanha o polinomio
+        if(sinal && obj.x[i] > 0)       //verifica se imprimiu algum polinomio, em caso afirmativo imprime o sinal 
+        {                               //que acompanha o polinomio
             os << " + ";
         }
         if (obj.x[i] < 0)
@@ -475,8 +475,8 @@ ostream& operator<<(ostream &os, const Polinomio &obj) {
         {
             if (obj.x[i] < 0)
             {
-                os << obj.x[i] * (-1);//troca o sinal de numeros negativos pois os sinais sao impressos 
-            }                         //independentemente
+                os << obj.x[i] * (-1);          //troca o sinal de numeros negativos pois os sinais sao impressos 
+            }                                   //independentemente
             else if(obj.x[i] > 0)
             {
                 os << obj.x[i];
@@ -523,7 +523,7 @@ ostream& operator<<(ostream &os, const Polinomio &obj) {
 }
 //Retorna derivada
 Polinomio Polinomio::derivada() const {
-    if (n == 1)//se for uma constante retorna um polinomio 0x^0
+    if (n == 1)         //se for uma constante retorna um polinomio 0x^0
     {
         Polinomio obj;
         return obj;
@@ -533,7 +533,7 @@ Polinomio Polinomio::derivada() const {
     obj.x = (double*) realloc(obj.x, sizeof(double)* (n-1));
     obj.n--;
     
-    for (int i = 0; i < n-1; i++)//derivada
+    for (int i = 0; i < n-1; i++)       //derivada
     {
         obj.x[i] = x[i+1] * (i+1);
     }
@@ -542,7 +542,7 @@ Polinomio Polinomio::derivada() const {
 }
 
 Polinomio Polinomio::integral() const {
-    if (n == 1 && x[0] == 0)//se for uma constante retorna um polinomio 0x^0
+    if (n == 1 && x[0] == 0)            //se for uma constante retorna um polinomio 0x^0
     {
         Polinomio obj;
         return obj;
@@ -553,7 +553,7 @@ Polinomio Polinomio::integral() const {
     obj.x = (double*) calloc(n+1, sizeof(double));
     obj.n++;
     
-    for (int i = 1; i < n+1; i++)//derivada
+    for (int i = 1; i < n+1; i++)       //derivada
     {
         obj.x[i] = x[i-1]/i;
     }
@@ -563,7 +563,7 @@ Polinomio Polinomio::integral() const {
 
 //Avalia
 double Polinomio::avalia(double num) const {
-    if (n == 1)//se constante retorna a propria constante
+    if (n == 1)         //se constante, retorna a propria constante
     {
         return x[0];
     }
@@ -579,21 +579,21 @@ double Polinomio::avalia(double num) const {
 
 //Resolve P(x)=0. Encontra raízes reais do polinomio
 double* Polinomio::resolve(int &numRaizes) const {
-    if (n == 2)//do primeiro grau 
+    if (n == 2)     //do primeiro grau 
     {
         double *raiz = (double*) malloc(sizeof(double));
         raiz[0] = (-x[0]/x[1]);
         numRaizes = 1;
         return raiz;
     }
-    if (n == 3)//do segundo grau calculando por Braska
+    if (n == 3)     //do segundo grau calculando por Bhaskara
     {
         double *raiz = (double*) malloc(sizeof(double)*2);
 
         double delta = (x[1] * x[1]) - (4 * x[2] * x[0]);
         if (delta < 0)
         {
-            raiz[0] = 0; // deve lancar uma execao fala que nao existe raiz
+            raiz[0] = 0;        // deve lancar uma execao fala que nao existe raiz
             raiz = (double*) realloc(raiz, sizeof(double));
             numRaizes = 1;
             return raiz;   
@@ -607,15 +607,15 @@ double* Polinomio::resolve(int &numRaizes) const {
     }
     
     //outros polinomios, calculando por metodo de Newton
-    double *raiz = (double*) malloc(sizeof(double)*n);//vetor para retonar as raizes
-    //auxiliares
+    double *raiz = (double*) malloc(sizeof(double)*n);      //vetor para retonar as raizes auxiliares
+    
     Polinomio auxFuncao(*this);
     Polinomio auxDerivada = (*this).derivada();
     
-    Polinomio divide(1);//polinomio para divisao
+    Polinomio divide(1);            //polinomio para divisao
     
-    double x = 1;//chute inicial
-    if (auxDerivada.avalia(x) == 0)//verifica se o chute eh valido, pois a derivada nao pode ser zero
+    double x = 1;       //chute inicial
+    if (auxDerivada.avalia(x) == 0)         //verifica se o chute e valido, pois a derivada nao pode ser zero
     {
         x++;
     }
@@ -624,19 +624,19 @@ double* Polinomio::resolve(int &numRaizes) const {
     
     double EPSILON = 1e-15;
     
-    for (int i = 0; i < 250; i++)//metodo de Newton
+    for (int i = 0; i < 250; i++)           //metodo de Newton
     {
-        raiz[j] = x - (auxFuncao.avalia(x) / auxDerivada.avalia(x));//calculo do metodo
+        raiz[j] = x - (auxFuncao.avalia(x) / auxDerivada.avalia(x));            //calculo do metodo
  
-        if (auxFuncao.avalia(raiz[j]) <= EPSILON)//verifica se encontrou uma raiz
+        if (auxFuncao.avalia(raiz[j]) <= EPSILON)           //verifica se encontrou uma raiz
         {
-            raiz[j] = x;//guarda a raiz no vetor de raizes
-            divide.x[0] = -raiz[j];//altera atualiza o polinomio de divisao
+            raiz[j] = x;            //guarda a raiz no vetor de raizes
+            divide.x[0] = -raiz[j];         //altera e atualiza o polinomio de divisao
             auxFuncao /= divide;
-            auxDerivada = auxFuncao.derivada();//calcula a nova derivada
+            auxDerivada = auxFuncao.derivada();         //calcula a nova derivada
             
-            x = 1;//chute
-            if (auxDerivada.avalia(x) == 0)//verifica o chute
+            x = 1;          //chute
+            if (auxDerivada.avalia(x) == 0)         //verifica o chute
             {
                 x++;
             }
@@ -648,7 +648,7 @@ double* Polinomio::resolve(int &numRaizes) const {
                 break;
             }
         }
-        else//se nao encotra a raiz, atualiza o x
+        else            //se nao encontrar a raiz, atualiza o x
         {
             x = raiz[j];
         } 
