@@ -200,14 +200,32 @@ void operacao(Polinomio &A)
     {
         cout << "Qual operacao deseja fazer com o polinomio A:\n";
         cout << " 1) +\n 2) -\n 3) *\n 4) /\n 5) %\n 6) ++\n 7) ==\n 8) Derivada\n 9) Avaliar\n 10) Resolver\n 11) Integral\n-->";
-        cin >> user;
+        
+        do
+        {
+            cin >> user;
+            if (user > 0 && user < 12)
+            {
+                break;
+            }
+            cout << "Digite um numero valido\n-->";
+        } while (user < 1 || user > 12);
         cout << endl;
 
         if (user == 1 || user == 2 || user == 3 || user == 4 || user == 5 || user == 7)
         {
             cout << "Fazer a oparacao com outro polinomio ou constante?!\n 1) Polinomio\n 2) constante\n-->";
             int polinomioOuConstante;
-            cin >> polinomioOuConstante;
+            do
+            {
+                cin >> polinomioOuConstante;
+                if (polinomioOuConstante > 0 && polinomioOuConstante < 3)
+                {
+                    break;
+                }
+                cout << "Digite um numero valido\n-->";
+            } while (polinomioOuConstante < 1 || polinomioOuConstante > 2);
+
             int esquerdaOuDireita;
             double constante;
             Polinomio B;
@@ -250,7 +268,15 @@ void operacao(Polinomio &A)
             case 1:
                 if(polinomioOuConstante == 1 || (polinomioOuConstante == 2 && esquerdaOuDireita == 2)){
                     cout << " 1) +\n ou\n 2) +=\n-->";
-                    cin >> user2;
+                    do
+                    {
+                        cin >> user2;
+                        if (user2 > 0 && user2 < 3)
+                        {
+                            break;
+                        }
+                        cout << "Digite um numero valido\n-->";
+                    } while (user2 < 1 || user2 > 2);
                     cout << endl;
                 }
                 if (user2 == 1 && polinomioOuConstante ==  1)
@@ -284,7 +310,15 @@ void operacao(Polinomio &A)
             case 2:
                 if(polinomioOuConstante == 1 || (polinomioOuConstante == 2 && esquerdaOuDireita == 2)){
                     cout << " 1) -\n ou\n 2) -=\n-->";
-                    cin >> user2;
+                    do
+                    {
+                        cin >> user2;
+                        if (user2 > 0 && user2 < 3)
+                        {
+                            break;
+                        }
+                        cout << "Digite um numero valido\n-->";
+                    } while (user2 < 1 || user2 > 2);
                     cout << endl;
                 }
                 if (user2 == 1 && polinomioOuConstante ==  1)
@@ -318,7 +352,15 @@ void operacao(Polinomio &A)
             case 3:
                 if(polinomioOuConstante == 1 || (polinomioOuConstante == 2 && esquerdaOuDireita == 2)){
                     cout << " 1) *\n ou\n 2) *=\n-->";
-                    cin >> user2;
+                    do
+                    {
+                        cin >> user2;
+                        if (user2 > 0 && user2 < 3)
+                        {
+                            break;
+                        }
+                        cout << "Digite um numero valido\n-->";
+                    } while (user2 < 1 || user2 > 2);
                     cout << endl;
                 }
                 if (user2 == 1 && polinomioOuConstante ==  1)
@@ -352,7 +394,15 @@ void operacao(Polinomio &A)
             case 4:
                 if(polinomioOuConstante == 1 || (polinomioOuConstante == 2 && esquerdaOuDireita == 2)){
                     cout << " 1) /\n ou\n 2) /=\n-->";
-                    cin >> user2;
+                    do
+                    {
+                        cin >> user2;
+                        if (user2 > 0 && user2 < 3)
+                        {
+                            break;
+                        }
+                        cout << "Digite um numero valido\n-->";
+                    } while (user2 < 1 || user2 > 2);
                     cout << endl;
                 }
                 if (user2 == 1 && polinomioOuConstante ==  1)
@@ -409,7 +459,15 @@ void operacao(Polinomio &A)
 
             case 5:
                 cout << " 1) %\n ou\n 2) %=\n--> ";
-                cin >> user2;
+                do
+                    {
+                        cin >> user2;
+                        if (user2 > 0 && user2 < 3)
+                        {
+                            break;
+                        }
+                        cout << "Digite um numero valido\n-->";
+                    } while (user2 < 1 || user2 > 2);
                 cout << endl;
                 if (user2 == 1 && polinomioOuConstante == 1)
                 {   
@@ -514,7 +572,15 @@ void operacao(Polinomio &A)
         }
     
         cout << "Deseja fazer outra operacao?! \n 1) Sim\n 2) Nao\n-->";
-        cin >> user;
+        do
+        {
+            cin >> user;
+            if (user > 0 && user < 3)
+            {
+                break;
+            }
+            cout << "Digite um numero valido\n-->";
+        } while (user < 1 || user > 2);
         cout << endl;
 
         if (user == 1)
@@ -575,7 +641,16 @@ int main()
 {
     int interacao0;
     cout << "Deseja ver um exemplo das funcoes implementadas nesse trabalho?\n 1) Sim\n 2) Nao\n-->";
-    cin >> interacao0;
+    do
+    {
+        cin >> interacao0;
+        if (interacao0 > 0 && interacao0 < 3)
+        {
+            break;
+        }
+        cout << "Digite um numero valido\n-->";
+    } while (interacao0 < 1 || interacao0 > 2);
+
     cout << endl;
     if (interacao0 == 1) //mostra um exemplo das fucionalidades presentes neste progama
     {
@@ -586,8 +661,17 @@ int main()
         while (true)
         {
             cout << "Deseja ver o exemplo novamente com diferentes polinomios?!\n 1) Sim\n 2) Nao \n-->";
-            cin >> interacao1;
+            do
+            {
+                cin >> interacao1;
+                if (interacao1 > 0 && interacao1 < 3)
+                {
+                    break;
+                }
+                cout << "Digite um numero valido\n-->";
+            } while (interacao1 < 1 || interacao1 > 2);
             cout << endl;
+            
             if (interacao1 == 1)
             {
                 exemplo();
@@ -601,8 +685,17 @@ int main()
 
     cout << "Deseja ir para o modo interativo?!\n 1) Sim\n 2) Nao  \n-->>";
     int interacao2;
-    cin >> interacao2;
+    do
+    {
+        cin >> interacao2;
+        if (interacao2 > 0 && interacao2 < 3)
+        {
+            break;
+        }
+        cout << "Digite um numero valido\n-->";
+    } while (interacao2 < 1 || interacao2 > 2);
     cout << endl;
+    
     if (interacao2 == 2)
     {
         return 0;
