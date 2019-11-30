@@ -60,7 +60,7 @@ void divisao(Polinomio &base, Polinomio &copia, Polinomio &resultado, Polinomio 
     cout << "%= " << copia << endl
          << endl;
     }catch(...){
-        cout << "Nao e possivel dividir um polinomio dessa ordem ou houve divisao por 0" << endl;
+        cout << "nao e possivel dividir um polinomio dessa ordem ou houve divisao por 0" << endl;
     }
 }
 
@@ -198,7 +198,7 @@ void operacao(Polinomio &A)
 
     while (true)
     {
-        cout << "Digite qual operacao deseja fazer com o polinomio A:\n";
+        cout << "Qual operacao deseja fazer com o polinomio A:\n";
         cout << " 1) +\n 2) -\n 3) *\n 4) /\n 5) %\n 6) ++\n 7) ==\n 8) Derivada\n 9) Avaliar\n 10) Resolver\n 11) Integral\n-->";
         
         do
@@ -214,7 +214,7 @@ void operacao(Polinomio &A)
 
         if (user == 1 || user == 2 || user == 3 || user == 4 || user == 5 || user == 7)
         {
-            cout << "Fazer a operacao com outro polinomio ou constante?\n 1) Polinomio\n 2) Constante\n-->";
+            cout << "Fazer a oparacao com outro polinomio ou constante?!\n 1) Polinomio\n 2) constante\n-->";
             int polinomioOuConstante;
             do
             {
@@ -233,8 +233,8 @@ void operacao(Polinomio &A)
             
             if (polinomioOuConstante == 1)
             {            
-                cout << "Digite outro polinomio na forma nx^0, nx^1,...,nx^m para fazer a operacao: (Digite apenas os coeficientes)\n";
-                cout << "DIGITE 'f' QUANDO TERMINAR\n";
+                cout << "Digite outro polinomio da forma nx^0, nx^1,...,nx^m para fazer a operacao:\n";
+                cout << "Digite 'f' quando acabar o polinomio\n";
                 vetor2PolinomioUsuario = criaPolinomio(tamanhoDoVetor);
                 Polinomio aux(tamanhoDoVetor, vetor2PolinomioUsuario);
                 free(vetor2PolinomioUsuario);
@@ -245,7 +245,7 @@ void operacao(Polinomio &A)
             else if (polinomioOuConstante == 2)
             {            
                 cout << "Fazer operacao com a constante pela esquerda(k_operaçao_polinomio) ou direita(polinomio_operacao_k)\n";
-                cout << " 1) Esquerda\n 2) Direita\n-->";
+                cout << " 1) Esquerda\n 2)Direita\n-->";
                 cin >> esquerdaOuDireita;
                 cout << endl;
                 cout << "Digite uma constante para fazer a operacao:\n";
@@ -279,6 +279,11 @@ void operacao(Polinomio &A)
                     } while (user2 < 1 || user2 > 2);
                     cout << endl;
                 }
+                else if(polinomioOuConstante == 2 && esquerdaOuDireita == 1)
+                {
+                    user2 = 1;
+                }
+
                 if (user2 == 1 && polinomioOuConstante ==  1)
                 {
                     Polinomio C = A + B;
@@ -321,6 +326,11 @@ void operacao(Polinomio &A)
                     } while (user2 < 1 || user2 > 2);
                     cout << endl;
                 }
+                else if(polinomioOuConstante == 2 && esquerdaOuDireita == 1)
+                {
+                    user2 = 1;
+                }
+
                 if (user2 == 1 && polinomioOuConstante ==  1)
                 {
                     Polinomio C = A - B;
@@ -363,6 +373,11 @@ void operacao(Polinomio &A)
                     } while (user2 < 1 || user2 > 2);
                     cout << endl;
                 }
+                else if(polinomioOuConstante == 2 && esquerdaOuDireita == 1)
+                {
+                    user2 = 1;
+                }
+
                 if (user2 == 1 && polinomioOuConstante ==  1)
                 {
                     Polinomio C = A * B;
@@ -405,6 +420,11 @@ void operacao(Polinomio &A)
                     } while (user2 < 1 || user2 > 2);
                     cout << endl;
                 }
+                else if(polinomioOuConstante == 2 && esquerdaOuDireita == 1)
+                {
+                    user2 = 1;
+                }
+                
                 if (user2 == 1 && polinomioOuConstante ==  1)
                 {
                     try{
@@ -571,27 +591,27 @@ void operacao(Polinomio &A)
             }
         }
     
-        cout << "Deseja fazer outra operacao?\n 1) Sim\n 2) Nao\n-->";
+        cout << "Deseja fazer outra operacao?! \n 1) Sim\n 2) Nao\n-->";
         do
-        {
-            cin >> user;
-            if (user > 0 && user < 3)
             {
-                break;
-            }
-            cout << "Digite um numero valido\n-->";
-        } while (user < 1 || user > 2);
+                cin >> user;
+                if (user > 0 && user < 3)
+                {
+                    break;
+                }
+                cout << "Digite um numero valido\n-->";
+            } while (user < 1 || user > 2);
         cout << endl;
 
         if (user == 1)
         {
             if (Bcriado)
             {
-                cout << "Deseja utilizar A ou B?\n 1) Quero ultilizar A\n 2) Quero utilizar B\n 3) Quero novos polinomios\n-->";
+                cout << "Deseja ultizar A ou B?!\n 1) Quero ultilizar A\n 2) Quero ultilizar B\n 3) Quero novos polinomios\n-->";
             }
             else if (!Bcriado)
             {
-                cout << "Deseja utilizar A ou B?\n 1) Quero ultilizar A\n 2) Quero utilizar B (INDISPONIVEL)\n 3) Quero novos polinomios\n-->";
+                cout << "Deseja ultizar A ou B?!\n 1) Quero ultilizar A\n 2) Quero ultilizar B (INDISPONIVEL)\n 3) Quero novos polinomios\n-->";
             }
             
             cin >> user2;
@@ -610,8 +630,8 @@ void operacao(Polinomio &A)
             else if (user2 == 2 && !Bcriado)
             {
                 cout << "Funcao indisponivel, B nao foi criado anteriomente \nCrie um novo Polinomio\n";
-                cout << "\nDigite um polinomio na forma nx^0, nx^1,...,nx^m\n (Digite apenas os coeficientes)\n";
-                cout << "DIGITE 'f' QUANDO TERMINAR\n";
+                cout << "\nDigite 1 polinomio da forma nx^0, nx^1,...,nx^m\n(Eh nescessario digitar somente os coeficientes)\n";
+                cout << "DIGITE 'f' QUANDO QUISER PARAR\n";
                 vetor2PolinomioUsuario = criaPolinomio(tamanhoDoVetor);
                 Polinomio aux(tamanhoDoVetor, vetor2PolinomioUsuario);
                 free(vetor2PolinomioUsuario);
@@ -620,8 +640,8 @@ void operacao(Polinomio &A)
             }
             else if (user2 == 3)
             {
-                cout << "\nDigite um polinomio na forma nx^0, nx^1,...,nx^m\n (Digite apenas os coeficientes)\n";
-                cout << "DIGITE 'f' QUANDO TERMINAR\n";
+                cout << "\nDigite 1 polinomio da forma nx^0, nx^1,...,nx^m\n(Eh nescessario digitar somente os coeficientes)\n";
+                cout << "DIGITE 'f' QUANDO QUISER PARAR\n";
                 vetor2PolinomioUsuario = criaPolinomio(tamanhoDoVetor);
                 Polinomio aux(tamanhoDoVetor, vetor2PolinomioUsuario);
                 free(vetor2PolinomioUsuario);
@@ -660,7 +680,7 @@ int main()
 
         while (true)
         {
-            cout << "Deseja ver o exemplo novamente com diferentes polinomios?\n 1) Sim\n 2) Nao \n-->";
+            cout << "Deseja ver o exemplo novamente com diferentes polinomios?!\n 1) Sim\n 2) Nao \n-->";
             do
             {
                 cin >> interacao1;
@@ -683,7 +703,7 @@ int main()
         }
     }
 
-    cout << "Deseja ir para o modo interativo?\n 1) Sim\n 2) Nao  \n-->>";
+    cout << "Deseja ir para o modo interativo?!\n 1) Sim\n 2) Nao  \n-->>";
     int interacao2;
     do
     {
@@ -703,8 +723,8 @@ int main()
     else if (interacao2 == 1)
     {
         int tamanhoVetor;
-        cout << "Digite 1 polinomio da forma nx^0, nx^1,...,nx^m\n (Digite apenas os coeficientes)\n";
-        cout << "DIGITE 'f' QUANDO TERMINAR\n";
+        cout << "Digite 1 polinomio da forma nx^0, nx^1,...,nx^m\n(Eh nescessario digitar somente os coeficientes)\n";
+        cout << "DIGITE 'f' QUANDO QUISER PARAR\n";
         double *vetorPolinomioUsuario = criaPolinomio(tamanhoVetor);
         cout << endl;
         Polinomio A(tamanhoVetor, vetorPolinomioUsuario);
