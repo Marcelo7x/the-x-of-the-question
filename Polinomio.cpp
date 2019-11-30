@@ -593,7 +593,7 @@ double* Polinomio::resolve(int &numRaizes) const {
         double delta = (x[1] * x[1]) - (4 * x[2] * x[0]);
         if (delta < 0)
         {
-            raiz[0] = 0;        // deve lancar uma execao fala que nao existe raiz
+            raiz[0] = 0;
             raiz = (double*) realloc(raiz, sizeof(double));
             numRaizes = 1;
             return raiz;   
