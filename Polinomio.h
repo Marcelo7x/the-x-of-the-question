@@ -118,12 +118,5 @@ class Polinomio {
 		double * resolve(int &) const;
 
 };
-/*
-class PosicaoInvalidaExcept() {
-};
-class ArgumentoInvalidoExcept() {
-};
-class RaizesNaoEncontradas() {
-};
-*/
+
 #endif
