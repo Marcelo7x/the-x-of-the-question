@@ -158,7 +158,7 @@ void exemplo()
         cout << endl << endl;
     }
     catch(...){
-        cout << "Nao e possivel dividir por um polinomio dessa ordem ou por 0\n";
+        cout << "Nao e possivel dividir por um polinomio dessa ordem ou por 0\n\n";
     }
     
 }
@@ -199,7 +199,7 @@ void operacao(Polinomio &A)
     while (true)
     {
         cout << "Qual operacao deseja fazer com o polinomio A:\n";
-        cout << " 1) +\n 2) -\n 3) *\n 4) /\n 5) %\n 6) ++\n 7) ==\n 8) Derivada\n 9) Avaliar\n 10) Resolver\n-->";
+        cout << " 1) +\n 2) -\n 3) *\n 4) /\n 5) %\n 6) ++\n 7) ==\n 8) Derivada\n 9) Avaliar\n 10) Resolver\n 11) Integral\n-->";
         cin >> user;
         cout << endl;
 
@@ -472,7 +472,7 @@ void operacao(Polinomio &A)
                 break;
             }
         }
-        else if (user == 6 || user == 8 || user == 9 || user == 10)
+        else if (user == 6 || user == 8 || user == 9 || user == 10 || user == 11)
         {
             switch (user)
             {
@@ -503,6 +503,10 @@ void operacao(Polinomio &A)
                     }
                     cout << endl << endl;
                     break;
+
+                case 11:
+                    cout << A.integral() << endl;
+                    break;
             
                 default:
                     break;
@@ -517,11 +521,11 @@ void operacao(Polinomio &A)
         {
             if (Bcriado)
             {
-                cout << "Deseja ultizar A ou B?!\n 1) Quero ultilizar A\n 2) Quero ultilizar B\n3) Quero novos polinomios\n-->";
+                cout << "Deseja ultizar A ou B?!\n 1) Quero ultilizar A\n 2) Quero ultilizar B\n 3) Quero novos polinomios\n-->";
             }
             else if (!Bcriado)
             {
-                cout << "Deseja ultizar A ou B?!\n 1) Quero ultilizar A\n 2) Quero ultilizar B (INDISPONIVEL)\n3) Quero novos polinomios\n-->";
+                cout << "Deseja ultizar A ou B?!\n 1) Quero ultilizar A\n 2) Quero ultilizar B (INDISPONIVEL)\n 3) Quero novos polinomios\n-->";
             }
             
             cin >> user2;

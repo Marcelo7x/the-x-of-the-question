@@ -101,6 +101,9 @@ class Polinomio {
 
 		// retorna a derivada do polinômio
 		Polinomio derivada() const;
+		
+		//retorna a integral do polinomio
+		Polinomio integral() const;
 
 		// avalia.
 		// Dado um número 'a', calcula P(a)
@@ -113,8 +116,6 @@ class Polinomio {
 		// sugestão: use o método de Newton para encontrar uma raiz, 
 		// use o algoritmo de divisão para simplificar o polinômio...
 		double * resolve(int &) const;
-
-		void imprime();
 
 };
 /*

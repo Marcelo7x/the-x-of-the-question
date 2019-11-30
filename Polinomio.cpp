@@ -541,6 +541,26 @@ Polinomio Polinomio::derivada() const {
     return obj;
 }
 
+Polinomio Polinomio::integral() const {
+    if (n == 1 && x[0] == 0)//se for uma constante retorna um polinomio 0x^0
+    {
+        Polinomio obj;
+        return obj;
+    }
+    
+    Polinomio obj(*this);
+    free(obj.x);
+    obj.x = (double*) calloc(n+1, sizeof(double));
+    obj.n++;
+    
+    for (int i = 1; i < n+1; i++)//derivada
+    {
+        obj.x[i] = x[i-1]/i;
+    }
+
+    return obj;
+}
+
 //Avalia
 double Polinomio::avalia(double num) const {
     if (n == 1)//se constante retorna a propria constante
