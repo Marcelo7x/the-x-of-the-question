@@ -61,7 +61,6 @@ void divisao(Polinomio &base, Polinomio &copia, Polinomio &resultado, Polinomio 
          << endl;
     }catch(...){
         cout << "nao e possivel dividir um polinomio dessa ordem ou houve divisao por 0" << endl;
-        exit(0);
     }
 }
 
@@ -159,9 +158,8 @@ void exemplo()
         cout << endl << endl;
     }
     catch(...){
-        cout << "Nao e possivel dividir por um polinomio dessa ordem ou houve divisao por 0\n";
-        exit(0);
-}
+        cout << "Nao e possivel dividir por um polinomio dessa ordem ou por 0\n";
+    }
     
 }
 
@@ -207,26 +205,36 @@ void operacao(Polinomio &A)
 
         if (user == 1 || user == 2 || user == 3 || user == 4 || user == 5 || user == 7)
         {
-            cout << "Fazer a oparecao com outro polinomio ou constante?!\n 1) Polinomio\n 2) constante\n-->";
+            cout << "Fazer a oparacao com outro polinomio ou constante?!\n 1) Polinomio\n 2) constante\n-->";
             int polinomioOuConstante;
             cin >> polinomioOuConstante;
+            int esquerdaOuDireita;
+            double constante;
+            Polinomio B;
+            cout << endl;
+            
             if (polinomioOuConstante == 1)
             {            
                 cout << "Digite outro polinomio da forma nx^0, nx^1,...,nx^m para fazer a operacao:\n";
                 cout << "Digite 'f' quando acabar o polinomio\n";
+                vetor2PolinomioUsuario = criaPolinomio(tamanhoDoVetor);
+                Polinomio aux(tamanhoDoVetor, vetor2PolinomioUsuario);
+                free(vetor2PolinomioUsuario);
+                B = aux;
+                Bcriado = true;
+                copiaB = B;
             }
             else if (polinomioOuConstante == 2)
             {            
+                cout << "Fazer operacao com a constante pela esquerda(k_operaçao_polinomio) ou direita(polinomio_operacao_k)\n";
+                cout << " 1) Esquerda\n 2)Direita\n-->";
+                cin >> esquerdaOuDireita;
+                cout << endl;
                 cout << "Digite uma constante para fazer a operacao:\n";
-                cout << "Digite 'f' apos digitar a constante\n";
+                cin >> constante;
+                
             }
-            
-            vetor2PolinomioUsuario = criaPolinomio(tamanhoDoVetor);
-            double constante = vetor2PolinomioUsuario[0];
             cout << endl;
-            Polinomio B(tamanhoDoVetor, vetor2PolinomioUsuario);
-            Bcriado = true;
-            copiaB = B;
            
             if (polinomioOuConstante == 1)
             {
@@ -236,14 +244,15 @@ void operacao(Polinomio &A)
             {
                 cout << "Constante : " << constante << endl << endl;
             }
-            free(vetor2PolinomioUsuario);
 
             switch (user)
             {
             case 1:
-                cout << " 1) +\n ou\n 2) +=\n-->";
-                cin >> user2;
-                cout << endl;
+                if(polinomioOuConstante == 1 || (polinomioOuConstante == 2 && esquerdaOuDireita == 2)){
+                    cout << " 1) +\n ou\n 2) +=\n-->";
+                    cin >> user2;
+                    cout << endl;
+                }
                 if (user2 == 1 && polinomioOuConstante ==  1)
                 {
                     Polinomio C = A + B;
@@ -251,20 +260,33 @@ void operacao(Polinomio &A)
                 }
                 else if (user2 == 1 && polinomioOuConstante ==  2)
                 {
-                    Polinomio C = A + constante;
-                    cout << C << endl << endl;
+                    if(esquerdaOuDireita == 1){
+                        Polinomio C = constante + A;
+                        cout << C << endl << endl; 
+                    }
+                    else if(esquerdaOuDireita == 2){
+                        Polinomio C = A + constante;
+                        cout << C << endl << endl;
+                    }
                 }
-                else if (user2 == 2)
+                else if (user2 == 2 && polinomioOuConstante == 1)
                 {
                     A += B;
+                    cout << A << endl << endl;
+                }
+                else if (user2 == 2 && polinomioOuConstante == 2)
+                {
+                    A += constante;
                     cout << A << endl << endl;
                 }
                 break;
 
             case 2:
-                cout << " 1) -\n ou\n 2) -=\n--> ";
-                cin >> user2;
-                cout << endl;
+                if(polinomioOuConstante == 1 || (polinomioOuConstante == 2 && esquerdaOuDireita == 2)){
+                    cout << " 1) -\n ou\n 2) -=\n-->";
+                    cin >> user2;
+                    cout << endl;
+                }
                 if (user2 == 1 && polinomioOuConstante ==  1)
                 {
                     Polinomio C = A - B;
@@ -272,20 +294,33 @@ void operacao(Polinomio &A)
                 }
                 else if (user2 == 1 && polinomioOuConstante ==  2)
                 {
-                    Polinomio C = A - constante;
-                    cout << C << endl << endl;
+                    if(esquerdaOuDireita == 1){
+                        Polinomio C = A - constante;
+                        cout << C << endl << endl;
+                    }
+                    else if (esquerdaOuDireita == 2){
+                        Polinomio C = constante - A;
+                        cout << C << endl << endl;
+                    }
                 }
-                else if (user2 == 2)
+                else if (user2 == 2 && polinomioOuConstante == 1)
                 {
                     A -= B;
+                    cout << A << endl << endl;
+                }
+                else if (user2 == 2 && polinomioOuConstante == 2)
+                {
+                    A -= constante;
                     cout << A << endl << endl;
                 }
                 break;
 
             case 3:
-                cout << " 1) *\n ou\n 2) *=\n--> ";
-                cin >> user2;
-                cout << endl;
+                if(polinomioOuConstante == 1 || (polinomioOuConstante == 2 && esquerdaOuDireita == 2)){
+                    cout << " 1) *\n ou\n 2) *=\n-->";
+                    cin >> user2;
+                    cout << endl;
+                }
                 if (user2 == 1 && polinomioOuConstante ==  1)
                 {
                     Polinomio C = A * B;
@@ -293,20 +328,33 @@ void operacao(Polinomio &A)
                 }
                 else if (user2 == 1 && polinomioOuConstante ==  2)
                 {
-                    Polinomio C = A * constante;
-                    cout << C << endl << endl;
+                    if(esquerdaOuDireita == 1){
+                        Polinomio C = A * constante;
+                        cout << C << endl << endl;
+                    }
+                    else if (esquerdaOuDireita == 2){
+                        Polinomio C = constante * A;
+                        cout << C << endl << endl;
+                    }
                 }
-                else if (user2 == 2)
+                else if (user2 == 2 && polinomioOuConstante == 1)
                 {
                     A *= B;
+                    cout << A << endl << endl;
+                }
+                else if (user2 == 2 && polinomioOuConstante == 2)
+                {
+                    A *= constante;
                     cout << A << endl << endl;
                 }
                 break;
 
             case 4:
-                cout << " 1) /\n ou\n 2) /=\n--> ";
-                cin >> user2;
-                cout << endl;
+                if(polinomioOuConstante == 1 || (polinomioOuConstante == 2 && esquerdaOuDireita == 2)){
+                    cout << " 1) /\n ou\n 2) /=\n-->";
+                    cin >> user2;
+                    cout << endl;
+                }
                 if (user2 == 1 && polinomioOuConstante ==  1)
                 {
                     try{
@@ -314,30 +362,47 @@ void operacao(Polinomio &A)
                         cout << C << endl << endl;
                     }
                     catch(...){
-                        cout << "Nao e possivel dividir por um polinomio dessa ordem ou houve divisao por 0\n";
-                        exit(0);
+                        cout << "Nao e possivel dividir por um polinomio dessa ordem ou por 0\n";
+                        break;
                     }
                 }
-                if (user2 == 1 && polinomioOuConstante ==  2)
+                else if (user2 == 1 && polinomioOuConstante ==  2)
                 {   
                     try{
-                        Polinomio C = A / polinomioOuConstante;
+                        if(esquerdaOuDireita == 1){
+                        Polinomio C = A / constante;
                         cout << C << endl << endl;
                     }
+                    else if (esquerdaOuDireita == 2){
+                        Polinomio C = constante / A;
+                        cout << C << endl << endl;
+                    }
+                    }
                     catch(...){
-                        cout << "Nao e possivel dividir por um polinomio dessa ordem ou houve divisao por 0\n";
-                        exit(0);
+                        cout << "Nao e possivel dividir por um polinomio dessa ordem ou por 0\n";
+                        break;
                 }
                 }
-                else if (user2 == 2)
+                else if (user2 == 2 && polinomioOuConstante == 1)
                 {   
                     try{
                         A /= B;
                         cout << A << endl << endl;
                     }
                     catch(...){
-                        cout << "Nao e possivel dividir por um polinomio dessa ordem ou houve divisao por 0\n";
-                        exit(0);
+                        cout << "Nao e possivel dividir por um polinomio dessa ordem ou por 0\n";
+                        break;
+                    }
+                }
+                else if (user2 == 2 && polinomioOuConstante == 2)
+                {   
+                    try{
+                        A /= constante;
+                        cout << A << endl << endl;
+                    }
+                    catch(...){
+                        cout << "Nao e possivel dividir por um polinomio dessa ordem ou por 0\n";
+                        break;
                     }
                 }
                 break;
@@ -346,26 +411,48 @@ void operacao(Polinomio &A)
                 cout << " 1) %\n ou\n 2) %=\n--> ";
                 cin >> user2;
                 cout << endl;
-                if (user2 == 1)
+                if (user2 == 1 && polinomioOuConstante == 1)
                 {   
                     try{
                         Polinomio C = A % B;
                         cout << C << endl << endl;
                     }
                     catch(...){
-                        cout << "Nao e possivel dividir por um polinomio dessa ordem ou houve divisao por 0\n";
-                        exit(0);
+                        cout << "Nao e possivel dividir por um polinomio dessa ordem ou por 0\n";
+                        break;
                     }
                 }
-                else if (user2 == 2)
+                if (user2 == 1 && polinomioOuConstante == 2)
+                {   
+                    try{
+                        Polinomio C = A % constante;
+                        cout << C << endl << endl;
+                    }
+                    catch(...){
+                        cout << "Nao e possivel dividir por um polinomio dessa ordem ou por 0\n";
+                        break;
+                    }
+                }
+                else if (user2 == 2 && polinomioOuConstante == 1)
                 {
                     try{
                         A %= B;
                         cout << A << endl << endl;
                     }
                     catch(...){
-                        cout << "Nao e possivel dividir por um polinomio dessa ordem ou houve divisao por 0\n";
-                        exit(0);
+                        cout << "Nao e possivel dividir por um polinomio dessa ordem ou por 0\n";
+                        break;
+                    }
+                }
+                else if (user2 == 2 && polinomioOuConstante == 2)
+                {
+                    try{
+                        A %= constante;
+                        cout << A << endl << endl;
+                    }
+                    catch(...){
+                        cout << "Nao e possivel dividir por um polinomio dessa ordem ou por 0\n";
+                        break;
                     }
                 }
                 break;
@@ -480,9 +567,13 @@ void operacao(Polinomio &A)
     }
 }
 
-int main(int argc, char **argv)
+int main()
 {
-    if (strcmp(argv[1], "exemplo") == 0) //mostra um exemplo das fucionalidades presentes neste progama
+    int interacao0;
+    cout << "Deseja ver um exemplo das funcoes implementadas nesse trabalho?\n 1) Sim\n 2) Nao\n-->";
+    cin >> interacao0;
+    cout << endl;
+    if (interacao0 == 1) //mostra um exemplo das fucionalidades presentes neste progama
     {
         exemplo();
 
