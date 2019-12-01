@@ -234,7 +234,7 @@ void operacao(Polinomio &A)
             
             if (polinomioOuConstante == 1)
             {            
-                cout << "Digite outro polinomio da forma nx^0, nx^1,...,nx^m para fazer a operacao:\n(Digite apenas os coeficientes)\n";
+                cout << "Digite outro polinomio na forma nx^0, nx^1,...,nx^m para fazer a operacao:\n(Digite apenas os coeficientes)\n";
                 cout << "DIGITE 'f' QUANDO FINALIZAR\n";
                 vetor2PolinomioUsuario = criaPolinomio(tamanhoDoVetor);
                 Polinomio aux(tamanhoDoVetor, vetor2PolinomioUsuario);
@@ -612,7 +612,7 @@ void operacao(Polinomio &A)
             }
             else if (!Bcriado)
             {
-                cout << "Deseja utilizar A ou B?\n 1) Quero utilizar A\n 2) Quero utilizar B (INDISPONIVEL)\n 3) Quero novos polinomios\n-->";
+                cout << "Deseja utilizar o polinomio A ou B?\n 1) Quero utilizar A\n 2) Quero utilizar B (INDISPONIVEL)\n 3) Quero novos polinomios\n-->";
             }
             
             cin >> user2;
@@ -631,7 +631,7 @@ void operacao(Polinomio &A)
             else if (user2 == 2 && !Bcriado)
             {
                 cout << "Funcao Indisponivel, B nao foi criado anteriomente\nCrie um novo Polinomio\n";
-                cout << "\nDigite um polinomio da forma nx^0, nx^1,...,nx^m\n(Digite apenas os coeficientes)\n";
+                cout << "\nDigite um polinomio na forma nx^0, nx^1,...,nx^m\n(Digite apenas os coeficientes)\n";
                 cout << "DIGITE 'f' QUANDO FINALIZAR\n-->";
                 vetor2PolinomioUsuario = criaPolinomio(tamanhoDoVetor);
                 Polinomio aux(tamanhoDoVetor, vetor2PolinomioUsuario);
@@ -641,7 +641,7 @@ void operacao(Polinomio &A)
             }
             else if (user2 == 3)
             {
-                cout << "\nDigite 1 polinomio da forma nx^0, nx^1,...,nx^m\n(Digite apenas os coeficientes)\n";
+                cout << "\nDigite um polinomio na forma nx^0, nx^1,...,nx^m\n(Digite apenas os coeficientes)\n";
                 cout << "DIGITE 'f' QUANDO FINALIZAR\n-->";
                 vetor2PolinomioUsuario = criaPolinomio(tamanhoDoVetor);
                 Polinomio aux(tamanhoDoVetor, vetor2PolinomioUsuario);
@@ -724,7 +724,7 @@ int main()
     else if (interacao2 == 1)
     {
         int tamanhoVetor;
-        cout << "Digite um polinomio da forma nx^0, nx^1,...,nx^m\n(Digite apenas os coeficientes)\n";
+        cout << "Digite um polinomio na forma nx^0, nx^1,...,nx^m\n(Digite apenas os coeficientes)\n";
         cout << "Exemplo: 1 2 3 4 5 == 5x^4 + 4x^3 + 3x^2 + 2x^1 + 1\n";
         cout << "DIGITE 'f' QUANDO FINALIZAR\n-->";
         double *vetorPolinomioUsuario = criaPolinomio(tamanhoVetor);
