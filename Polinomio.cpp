@@ -11,7 +11,7 @@ class erroPosicaoInvalida{};
 //notacao potencia "^" ... exemplo: x^2 (x elevado a 2) 
 
 //Construtor padrão. Representa numero 0
-Polinomio::Polinomio() {//Aloca 1 posicao, coloca o valor 0
+Polinomio::Polinomio() {        //Aloca 1 posicao, coloca o valor 0
     n = 1;
     x = (double*) malloc(sizeof(double)*n);
     x[0] = 0;
@@ -22,7 +22,7 @@ Polinomio::Polinomio(const int num) {       //Aloca um vetor de 2 posicoes, cada
     this->n = 2;                            //do polinomio, exemplo: x[3] = 2 equivale as 2x^3
     x = (double*) malloc(sizeof(double)*n);
     x[0] = 0;
-    x[1] = num;     //polinomio formado por 0x^0 (primeira posicao do vetor) e ax^1;
+    x[1] = num;         //polinomio formado por 0x^0 (primeira posicao do vetor) e ax^1;
 }
 
 //Cria um polinomio a partir de um vetor de coeficientes. Os coeficientes deverão ser o do polinomio (Posicao 0 sera a_0, posicao 1 sera a_1, ...). O primeiro parametro representa o grau do polinomio.
@@ -75,7 +75,7 @@ Polinomio & Polinomio::operator=(const Polinomio &obj) {
 Polinomio Polinomio::operator+(const Polinomio &obj) const {
     Polinomio const *menor;
     Polinomio const *maior;
-    if (n <= obj.n)             //verifica o tamanho do maior vetor de polinomio
+    if (n <= obj.n)             //verifica o tamanho do maior vetor do polinomio
     {
         menor = this;
         maior = &obj;
@@ -251,7 +251,7 @@ Polinomio & Polinomio::operator*=(const Polinomio &obj) {
            objaux.x[i+j] += x[i] * (obj.x[j]);          //distributividade
        }
     }
-    (*this) = objaux;           //copiar os resultados para o objeto a ser modificado
+    (*this) = objaux;           //copia os resultados para o objeto a ser modificado
 
     return *this;
 }
