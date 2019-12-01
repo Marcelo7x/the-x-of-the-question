@@ -560,7 +560,7 @@ void operacao(Polinomio &A)
                     break;
 
                 case 8:
-                    cout << A.derivada() << endl;
+                    cout << A.derivada() << endl << endl;
                     break;
 
                 case 9:
@@ -584,7 +584,7 @@ void operacao(Polinomio &A)
                     break;
 
                 case 11:
-                    cout << A.integral() << endl;
+                    cout << A.integral() << endl << endl;
                     break;
             
                 default:
@@ -648,6 +648,7 @@ void operacao(Polinomio &A)
                 free(vetor2PolinomioUsuario);
                 A = aux;
                 cout << "Polinomio A: " << A << endl << endl;
+                Bcriado = false;
             }
         }
         else if (user == 2)
