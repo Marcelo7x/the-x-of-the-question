@@ -85,6 +85,10 @@ class Polinomio {
 		Polinomio operator++();
 		Polinomio operator++(int);
 
+		// decrementos (subtrair 1) ao termo constante
+		Polinomio operator--();
+		Polinomio operator--(int);
+
 		/* Comparação */
 		
 		// igualdade

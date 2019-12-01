@@ -149,12 +149,13 @@ void exemplo()
     
     try{
         double n = (rand() % 11 + 1);
-        cout << "\nExemplo de calculo: P(" << n << "){(++(" << base << ") * 2) - (" << auxiliar << ") * 2) / ("
-            << auxiliarDivisao << ")} + "
+        cout << "\nExemplo de calculo: P(" << n << "){(++(" << base << ") * 2 - (" << "-- (" << base << "))) - ((" << auxiliar << ") * 2) / ("
+            << auxiliarDivisao << ")) * (" << auxiliarDivisao << ") + (" << auxiliar << ") % (" << auxiliarDivisao << ")} + "
             << "P(" << n << "){("
-            << "derivada(" << auxiliar << ")} - "
-            << "((" << auxiliar << ") % (" << auxiliarDivisao << "))\n";
-        cout << "= " << ((++base * 2) - ((auxiliar * 2) / auxiliarDivisao)).avalia(n) + (auxiliar.derivada().avalia(n)) - (auxiliar % auxiliarDivisao).avalia(0);
+            << "derivada(" << auxiliar << ") + integral(" << auxiliar << ")} - "
+            << "((" << auxiliar << ") % (" << auxiliarDivisao << ") + (" << auxiliar << ") % (" << auxiliarDivisao << "))\n";
+        cout << "= " << ((++base * 2 - (++base)) - (((auxiliar * 2) / auxiliarDivisao)* auxiliarDivisao) + auxiliar%auxiliarDivisao).avalia(n)
+         + (auxiliar.derivada().avalia(n) + auxiliar.integral().avalia(n)) - (auxiliar % auxiliarDivisao).avalia(0) + (auxiliar % auxiliarDivisao).avalia(0);
         cout << endl << endl;
     }
     catch(...){
@@ -424,7 +425,7 @@ void operacao(Polinomio &A)
                 {
                     user2 = 1;
                 }
-                
+
                 if (user2 == 1 && polinomioOuConstante ==  1)
                 {
                     try{
@@ -631,7 +632,7 @@ void operacao(Polinomio &A)
             {
                 cout << "Funcao indisponivel, B nao foi criado anteriomente \nCrie um novo Polinomio\n";
                 cout << "\nDigite 1 polinomio da forma nx^0, nx^1,...,nx^m\n(Eh nescessario digitar somente os coeficientes)\n";
-                cout << "DIGITE 'f' QUANDO QUISER PARAR\n";
+                cout << "DIGITE 'f' QUANDO QUISER PARAR\n-->";
                 vetor2PolinomioUsuario = criaPolinomio(tamanhoDoVetor);
                 Polinomio aux(tamanhoDoVetor, vetor2PolinomioUsuario);
                 free(vetor2PolinomioUsuario);
@@ -641,7 +642,7 @@ void operacao(Polinomio &A)
             else if (user2 == 3)
             {
                 cout << "\nDigite 1 polinomio da forma nx^0, nx^1,...,nx^m\n(Eh nescessario digitar somente os coeficientes)\n";
-                cout << "DIGITE 'f' QUANDO QUISER PARAR\n";
+                cout << "DIGITE 'f' QUANDO QUISER PARAR\n-->";
                 vetor2PolinomioUsuario = criaPolinomio(tamanhoDoVetor);
                 Polinomio aux(tamanhoDoVetor, vetor2PolinomioUsuario);
                 free(vetor2PolinomioUsuario);
@@ -724,7 +725,8 @@ int main()
     {
         int tamanhoVetor;
         cout << "Digite 1 polinomio da forma nx^0, nx^1,...,nx^m\n(Eh nescessario digitar somente os coeficientes)\n";
-        cout << "DIGITE 'f' QUANDO QUISER PARAR\n";
+        cout << "Exemplo: 1 2 3 4 5 == 5x^4 + 4x^3 + 3x^2 + 2x^1 + 1\n";
+        cout << "DIGITE 'f' QUANDO QUISER PARAR\n-->";
         double *vetorPolinomioUsuario = criaPolinomio(tamanhoVetor);
         cout << endl;
         Polinomio A(tamanhoVetor, vetorPolinomioUsuario);

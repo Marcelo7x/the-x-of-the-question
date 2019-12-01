@@ -426,6 +426,18 @@ Polinomio Polinomio::operator++(int) {      //++ pos fixado
     return obj;
 }
 
+//decrementos (subtrair 1) ao termo constante
+Polinomio Polinomio::operator--() {         // -- prefixado
+    x[0] -= 1;
+    return *this;
+}
+Polinomio Polinomio::operator--(int) {      //-- pos fixado 
+    Polinomio obj(*this);
+    x[0] -= 1;
+    
+    return obj;
+}
+
 //Comparação
 //igualdade (verifica se dois polinomios tem  o mesmo grau e coeficientes)
 bool Polinomio::operator==(const Polinomio &obj) const {
