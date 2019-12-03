@@ -157,6 +157,11 @@ Polinomio Polinomio::operator-(const Polinomio &obj) const {
     }
     Polinomio objSubtracao(*maior);
 
+    for (int i = menor->n; i < maior->n; i++)
+    {
+        objSubtracao.x[i] = - objSubtracao.x[i];
+    }
+    
     for (int i = 0; i < menor->n; i++)
     {
         objSubtracao.x[i] = x[i] - obj.x[i];
@@ -185,7 +190,7 @@ Polinomio & Polinomio::operator-=(const Polinomio &obj) {
         x = (double*) realloc(x, sizeof(double)*(maior->n));
         for (int i = menor->n; i < maior->n; i++)           //copia os polinomios que nao possuem termos semelhantes
         {
-            x[i] = obj.x[i];
+            x[i] = - obj.x[i];
         }
     }
     else
