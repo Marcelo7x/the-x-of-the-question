@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <iomanip>
 #include <math.h>
+#include <cstdlib>
 
 using namespace std;
 class erroDivisao
@@ -640,16 +641,16 @@ double Polinomio::avalia(double num) const
 }
 
 //Resolve P(x)=0. Encontra raízes reais do polinomio
-double *Polinomio::resolve(int &numRaizes) const
+double *Polinomio::resolve (int & numRaizes) const
 {
-    if (n == 2) //do primeiro grau
+    if (n == 2)  //do primeiro grau
     {
         double *raiz = (double *)malloc(sizeof(double));
         raiz[0] = (-x[0] / x[1]);
         numRaizes = 1;
         return raiz;
     }
-    if (n == 3) //do segundo grau calculando por Bhaskara
+    if (n == 3)  //do segundo grau calculando por Bhaskara
     {
         double *raiz = (double *)malloc(sizeof(double) * 2);
 
@@ -668,57 +669,52 @@ double *Polinomio::resolve(int &numRaizes) const
 
         return raiz;
     }
-
-    //outros polinomios, calculando por metodo de Newton
-    double *raiz = (double *)malloc(sizeof(double) * n); //vetor para retonar as raizes auxiliares
-
+    double *raiz = ((double *)malloc(sizeof(double)) * n);  //vetor para retonar as raizes auxiliares
+    
     Polinomio auxFuncao(*this);
     Polinomio auxDerivada = (*this).derivada();
 
-    Polinomio divide(1); //polinomio para divisao
-
-    double x = 1;                   //chute inicial
-    if (auxDerivada.avalia(x) == 0) //verifica se o chute e valido, pois a derivada nao pode ser zero
-    {
-        x++;
-    }
-
-    int j = 0;
-
+    numRaizes = 0;
+    
     double EPSILON = 1e-15;
 
-    for (int i = 0; i < 250; i++) //metodo de Newton
+    for (int i = 0; i <50; i++)  //metodo de Newton
     {
-        raiz[j] = x - (auxFuncao.avalia(x) / auxDerivada.avalia(x)); //calculo do metodo
+        double x = (rand() % 100) * pow(-1, rand()%2);  //inves do chute, mais fácil criar um rand
 
-        if (auxFuncao.avalia(raiz[j]) <= EPSILON) //verifica se encontrou uma raiz
+        if (auxDerivada.avalia(x) == 0)  //verifica se o chute e valido, pois a derivada nao pode ser zero
         {
-            raiz[j] = x;            //guarda a raiz no vetor de raizes
-            divide.x[0] = -raiz[j]; //altera e atualiza o polinomio de divisao
-            auxFuncao /= divide;
-            auxDerivada = auxFuncao.derivada(); //calcula a nova derivada
+            x++;
+        }
 
-            x = 1;                          //chute
-            if (auxDerivada.avalia(x) == 0) //verifica o chute
+        for (int j = 0; j < 50; j++) 
+        {
+            x = x - auxFuncao.avalia(x) / auxDerivada.avalia(x);  //calculo do metodo
+
+            if (auxFuncao.avalia(x)) <= EPSILON)
             {
-                x++;
-            }
+                bool nova_raiz = true;
 
-            j++;
+                for (int k = 0; k < numRaizes; k++)
+                {
+                    if ((x - raizes[k]) < EPSILON)
+                        nova_raiz = false;
+                }
 
-            if (j >= n)
-            {
+                if (nova_raiz) 
+                    raizes[numRaizes++] = x;
+
                 break;
             }
         }
-        else //se nao encontrar a raiz, atualiza o x
-        {
-            x = raiz[j];
-        }
+
+        if (numRaizes == this->n-1)
+            break;
     }
 
-    raiz = (double *)realloc(raiz, sizeof(double) * j);
-    numRaizes = j;
+    if (numRaizes == 0) {
+        throw RaizesNaoEncontradas();
+    }
 
     return raiz;
 }
