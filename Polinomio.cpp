@@ -12,6 +12,9 @@ class erroDivisao
 class erroPosicaoInvalida
 {
 };
+class RaizesNaoEncontradas
+{
+};
 
 //notacao potencia "^" ... exemplo: x^2 (x elevado a 2)
 
@@ -669,7 +672,7 @@ double *Polinomio::resolve (int & numRaizes) const
 
         return raiz;
     }
-    double *raiz = ((double *)malloc(sizeof(double)) * n);  //vetor para retonar as raizes auxiliares
+    double *raiz = (double *)malloc(sizeof(double) * n);  //vetor para retonar as raizes auxiliares
     
     Polinomio auxFuncao(*this);
     Polinomio auxDerivada = (*this).derivada();
@@ -691,18 +694,18 @@ double *Polinomio::resolve (int & numRaizes) const
         {
             x = x - auxFuncao.avalia(x) / auxDerivada.avalia(x);  //calculo do metodo
 
-            if (abs(auxFuncao.avalia(x))) <= EPSILON)
+            if (abs(auxFuncao.avalia(x)) <= EPSILON)
             {
                 bool nova_raiz = true;
 
                 for (int k = 0; k < numRaizes; k++)
                 {
-                    if (abs(x - raizes[k]) < EPSILON)
+                    if (abs(x - raiz[k]) < EPSILON)
                         nova_raiz = false;
                 }
 
                 if (nova_raiz) 
-                    raizes[numRaizes++] = x;
+                    raiz[numRaizes++] = x;
 
                 break;
             }
