@@ -691,13 +691,13 @@ double *Polinomio::resolve (int & numRaizes) const
         {
             x = x - auxFuncao.avalia(x) / auxDerivada.avalia(x);  //calculo do metodo
 
-            if (auxFuncao.avalia(x)) <= EPSILON)
+            if (abs(auxFuncao.avalia(x))) <= EPSILON)
             {
                 bool nova_raiz = true;
 
                 for (int k = 0; k < numRaizes; k++)
                 {
-                    if ((x - raizes[k]) < EPSILON)
+                    if (abs(x - raizes[k]) < EPSILON)
                         nova_raiz = false;
                 }
 
