@@ -644,16 +644,16 @@ double Polinomio::avalia(double num) const
 }
 
 //Resolve P(x)=0. Encontra raízes reais do polinomio
-double *Polinomio::resolve (int & numRaizes) const
+double *Polinomio::resolve(int &numRaizes) const
 {
-    if (n == 2)  //do primeiro grau
+   if (n == 2) //do primeiro grau
     {
         double *raiz = (double *)malloc(sizeof(double));
         raiz[0] = (-x[0] / x[1]);
         numRaizes = 1;
         return raiz;
     }
-    if (n == 3)  //do segundo grau calculando por Bhaskara
+    if (n == 3) //do segundo grau calculando por Bhaskara
     {
         double *raiz = (double *)malloc(sizeof(double) * 2);
 
@@ -672,52 +672,86 @@ double *Polinomio::resolve (int & numRaizes) const
 
         return raiz;
     }
-    double *raiz = (double *)malloc(sizeof(double) * n);  //vetor para retonar as raizes auxiliares
-    
+
+    //outros polinomios, calculando por metodo de Newton
+    double *raiz = (double *)malloc(sizeof(double) * n); //vetor para retonar as raizes auxiliares
+
     Polinomio auxFuncao(*this);
     Polinomio auxDerivada = (*this).derivada();
 
-    numRaizes = 0;
-    
+    Polinomio divide(1); //polinomio para divisao
+
+    double x = 1;                   //chute inicial
+    if (auxDerivada.avalia(x) == 0) //verifica se o chute e valido, pois a derivada nao pode ser zero
+    {
+        x++;
+    }
+
+    int j = 0;
+
     double EPSILON = 1e-15;
 
-    for (int i = 0; i <50; i++)  //metodo de Newton
+    for (int i = 0; i < 250; i++) //metodo de Newton
     {
-        double x = (rand() % 100) * pow(-1, rand()%2);  //inves do chute, mais fácil criar um rand
-
-        if (auxDerivada.avalia(x) == 0)  //verifica se o chute e valido, pois a derivada nao pode ser zero
+        if (auxFuncao.n == 2) //do primeiro grau
         {
-            x++;
+            raiz[0] = (-auxFuncao.x[0] / auxFuncao.x[1]);
+            numRaizes = 1;
+            return raiz;
         }
-
-        for (int j = 0; j < 50; j++) 
+        else if (auxFuncao.n == 3) //do segundo grau calculando por Bhaskara
         {
-            x = x - auxFuncao.avalia(x) / auxDerivada.avalia(x);  //calculo do metodo
-
-            if (abs(auxFuncao.avalia(x)) <= EPSILON)
+            double delta = (auxFuncao.x[1] * auxFuncao.x[1]) - (4 * auxFuncao.x[2] * auxFuncao.x[0]);
+            if (delta < 0)
             {
-                bool nova_raiz = true;
+                raiz[j] = 0;
+                raiz = (double *)realloc(raiz, sizeof(double));
+                numRaizes += 1;
+                return raiz;
+            }
 
-                for (int k = 0; k < numRaizes; k++)
-                {
-                    if (abs(x - raiz[k]) < EPSILON)
-                        nova_raiz = false;
-                }
+            raiz[j] = (-auxFuncao.x[1] - sqrt(delta)) / (2 * auxFuncao.x[2]);
+            raiz[j+1] = (-auxFuncao.x[1] + sqrt(delta)) / (2 * auxFuncao.x[2]);
+            numRaizes += 2;
+            
+            j+= 2;
+ 
+            if (j >= n-1)
+            {
+                break;
+            }
+            
+        }
+        raiz[j] = x - (auxFuncao.avalia(x) / auxDerivada.avalia(x)); //calculo do metodo
 
-                if (nova_raiz) 
-                    raiz[numRaizes++] = x;
+        if (auxFuncao.avalia(raiz[j]) <= EPSILON) //verifica se encontrou uma raiz
+        {
+            raiz[j] = x;            //guarda a raiz no vetor de raizes
+            divide.x[0] = -raiz[j]; //altera e atualiza o polinomio de divisao
+            auxFuncao /= divide;
+            auxDerivada = auxFuncao.derivada(); //calcula a nova derivada
 
+            x = 1;                          //chute
+            if (auxDerivada.avalia(x) == 0) //verifica o chute
+            {
+                x++;
+            }
+
+            j++;
+
+            if (j >= n)
+            {
                 break;
             }
         }
-
-        if (numRaizes == this->n-1)
-            break;
+        else //se nao encontrar a raiz, atualiza o x
+        {
+            x = raiz[j];
+        }
     }
 
-    if (numRaizes == 0) {
-        throw RaizesNaoEncontradas();
-    }
+    raiz = (double *)realloc(raiz, sizeof(double) * j);
+    numRaizes = j;
 
     return raiz;
 }
