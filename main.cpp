@@ -145,7 +145,12 @@ void exemplo()
     avalia(auxiliar);
 
     cout << "RESOLVE\n";
-    resolve(auxiliar);
+    try{
+        resolve(auxiliar);
+    }
+    catch(...){
+        cerr << "Nao encotrou raizes\n";
+    }
     
     try{
         double n = (rand() % 11 + 1);
@@ -574,7 +579,17 @@ void operacao(Polinomio &A)
                 case 10:
                     double *raizes;
                     int numRaizes;
-                    raizes = A.resolve(numRaizes);
+                    try
+                    {
+                        raizes = A.resolve(numRaizes);
+                    }
+                    catch(...)
+                    {
+                        std::cerr << "Nao encotrou raizes" << '\n';
+                        break;
+                    }
+                    
+                    
                     cout << "Polinomio A tem " << numRaizes << " raizes:\n";
                     for (int i = 0; i < numRaizes; i++)
                     {

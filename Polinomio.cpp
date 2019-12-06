@@ -646,7 +646,7 @@ double Polinomio::avalia(double num) const
 //Resolve P(x)=0. Encontra raízes reais do polinomio
 double *Polinomio::resolve(int &numRaizes) const
 {
-   if (n == 2) //do primeiro grau
+    if (n == 2) //do primeiro grau
     {
         double *raiz = (double *)malloc(sizeof(double));
         raiz[0] = (-x[0] / x[1]);
@@ -660,10 +660,7 @@ double *Polinomio::resolve(int &numRaizes) const
         double delta = (x[1] * x[1]) - (4 * x[2] * x[0]);
         if (delta < 0)
         {
-            raiz[0] = 0;
-            raiz = (double *)realloc(raiz, sizeof(double));
-            numRaizes = 1;
-            return raiz;
+            throw RaizesNaoEncontradas();
         }
 
         raiz[0] = (-x[1] - sqrt(delta)) / (2 * x[2]);
@@ -695,19 +692,20 @@ double *Polinomio::resolve(int &numRaizes) const
     {
         if (auxFuncao.n == 2) //do primeiro grau
         {
+            //double *raiz = (double *)malloc(sizeof(double));
             raiz[0] = (-auxFuncao.x[0] / auxFuncao.x[1]);
             numRaizes = 1;
             return raiz;
         }
         else if (auxFuncao.n == 3) //do segundo grau calculando por Bhaskara
         {
+            cout << 'a';
+            //double *raiz = (double *)malloc(sizeof(double) * 2);
+
             double delta = (auxFuncao.x[1] * auxFuncao.x[1]) - (4 * auxFuncao.x[2] * auxFuncao.x[0]);
             if (delta < 0)
             {
-                raiz[j] = 0;
-                raiz = (double *)realloc(raiz, sizeof(double));
-                numRaizes += 1;
-                return raiz;
+                break;
             }
 
             raiz[j] = (-auxFuncao.x[1] - sqrt(delta)) / (2 * auxFuncao.x[2]);
@@ -715,7 +713,8 @@ double *Polinomio::resolve(int &numRaizes) const
             numRaizes += 2;
             
             j+= 2;
- 
+            cout << "j" << j << " n" << n << endl;
+
             if (j >= n-1)
             {
                 break;
