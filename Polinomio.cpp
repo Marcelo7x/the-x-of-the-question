@@ -699,7 +699,6 @@ double *Polinomio::resolve(int &numRaizes) const
         }
         else if (auxFuncao.n == 3) //do segundo grau calculando por Bhaskara
         {
-            cout << 'a';
             //double *raiz = (double *)malloc(sizeof(double) * 2);
 
             double delta = (auxFuncao.x[1] * auxFuncao.x[1]) - (4 * auxFuncao.x[2] * auxFuncao.x[0]);
@@ -713,7 +712,6 @@ double *Polinomio::resolve(int &numRaizes) const
             numRaizes += 2;
             
             j+= 2;
-            cout << "j" << j << " n" << n << endl;
 
             if (j >= n-1)
             {
